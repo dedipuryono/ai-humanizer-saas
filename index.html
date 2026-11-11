@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Humanizer Pro | Bypass AI Detection</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#0B0C10',
+                        darker: '#1F2833',
+                        neonBlue: '#66FCF1',
+                        neonCyan: '#45A29E',
+                    },
+                    boxShadow: {
+                        'neon': '0 0 10px rgba(102, 252, 241, 0.5)',
+                        'neon-strong': '0 0 20px rgba(102, 252, 241, 0.8)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar untuk estetika */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0B0C10; }
+        ::-webkit-scrollbar-thumb { background: #45A29E; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #66FCF1; }
+        
+        .fade-bottom {
+            -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+        }
+    </style>
+</head>
+<body class="bg-obsidian text-gray-300 min-h-screen flex flex-col antialiased">
+
+    <!-- Header -->
+    <header class="border-b border-darker p-4 flex justify-between items-center shadow-md">
+        <h1 class="text-2xl font-bold text-white tracking-widest">
+            AI <span class="text-neonBlue drop-shadow-[0_0_8px_#66FCF1]">HUMANIZER</span>
+        </h1>
+        <button id="loginBtn" class="text-sm text-neonCyan hover:text-neonBlue transition-colors">Client Login</button>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="flex-grow p-4 md:p-8 flex flex-col md:flex-row gap-6">
+        
+        <!-- Kolom Input (Kiri) -->
+        <div class="flex-1 flex flex-col bg-darker rounded-xl border border-gray-700 overflow-hidden shadow-lg transition-all focus-within:border-neonCyan focus-within:shadow-neon">
+            <div class="p-3 border-b border-gray-700 bg-black/20 flex justify-between items-center">
+                <span class="text-sm font-semibold text-gray-400">INPUT TEKS AI</span>
+                <span id="wordCount" class="text-xs text-neonCyan">0 Kata</span>
+            </div>
+            <textarea id="inputText" class="flex-grow w-full bg-transparent p-4 text-gray-200 resize-none outline-none" placeholder="Tempelkan teks hasil ChatGPT Anda di sini (Maksimal 1.000 kata)..."></textarea>
+        </div>
+
+        <!-- Kolom Output (Kanan) -->
+        <div class="flex-1 flex flex-col bg-darker rounded-xl border border-gray-700 overflow-hidden relative shadow-lg">
+            <div class="p-3 border-b border-gray-700 bg-black/20 flex justify-between items-center">
+                <span class="text-sm font-semibold text-gray-400">HASIL HUMANISASI</span>
+                <span id="statusBadge" class="text-xs bg-gray-800 text-gray-500 px-2 py-1 rounded">Menunggu</span>
+            </div>
+            
+            <div id="outputContainer" class="flex-grow w-full p-4 relative overflow-y-auto">
+                <!-- Teks hasil akan masuk ke sini -->
+                <p id="outputText" class="text-gray-200 leading-relaxed"></p>
+                
+                <!-- Overlay Paywall (Disembunyikan secara default) -->
+                <div id="paywallOverlay" class="hidden absolute inset-0 bg-obsidian/80 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center">
+                    <svg class="w-12 h-12 text-neonBlue mb-4 drop-shadow-[0_0_8px_#66FCF1]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    <h3 class="text-xl font-bold text-white mb-2">Batas Teks Gratis Tercapai</h3>
+                    <p class="text-sm text-gray-400 mb-6">Anda telah melihat 150 kata pertama. Buka kunci sisa teks ini dan lolos 100% dari deteksi AI.</p>
+                    <a href="https://link-lemonsqueezy-anda.com/checkout" id="unlockBtn" class="bg-neonCyan hover:bg-neonBlue text-obsidian font-bold py-3 px-8 rounded-lg shadow-neon hover:shadow-neon-strong transition-all transform hover:scale-105">
+                        Unlock Full Text - $9.99
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Action Button di Tengah -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <button id="humanizeBtn" class="bg-obsidian border-2 border-neonBlue text-neonBlue hover:bg-neonBlue hover:text-obsidian font-bold py-3 px-10 rounded-full shadow-neon hover:shadow-neon-strong transition-all flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            HUMANIZE TEKS
+        </button>
+    </div>
+
+    <!-- Frontend Logic -->
+    <script>
+        const inputText = document.getElementById('inputText');
+        const wordCount = document.getElementById('wordCount');
+        const humanizeBtn = document.getElementById('humanizeBtn');
+        const outputText = document.getElementById('outputText');
+        const statusBadge = document.getElementById('statusBadge');
+        const paywallOverlay = document.getElementById('paywallOverlay');
+
+        // Menghitung kata secara real-time
+        inputText.addEventListener('input', () => {
+            const words = inputText.value.trim().split(/\s+/).filter(w => w.length > 0);
+            wordCount.textContent = `${words.length} Kata`;
+        });
+
+        // Simulasi Eksekusi API
+        humanizeBtn.addEventListener('click', async () => {
+            const text = inputText.value.trim();
+            if (!text) {
+                alert("Masukkan teks terlebih dahulu!");
+                return;
+            }
+
+            // Animasi Loading
+            humanizeBtn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> MEMPROSES...`;
+            humanizeBtn.disabled = true;
+            statusBadge.className = "text-xs bg-yellow-900 text-yellow-400 px-2 py-1 rounded animate-pulse";
+            statusBadge.textContent = "Bypassing AI...";
+            outputText.innerHTML = "";
+            paywallOverlay.classList.add('hidden');
+            outputText.classList.remove('fade-bottom');
+
+            try {
+                // PANGGILAN API KE CLOUDFLARE WORKER
+                // Saat Anda sudah membuat worker, URL ini otomatis aktif
+                const response = await fetch('/api/humanize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: text })
+                });
+
+                if (!response.ok) throw new Error('API Error');
+                const data = await response.json();
+                const resultWords = data.result.split(/\s+/);
+
+                // LOGIKA PAYWALL (Hanya di frontend untuk MVP, di produksi kunci sisa teks di backend)
+                if (resultWords.length > 150) {
+                    const freeText = resultWords.slice(0, 150).join(" ");
+                    const lockedText = resultWords.slice(150).join(" ");
+                    
+                    outputText.innerHTML = `
+                        <span class="text-gray-200">${freeText}</span>
+                        <span class="text-gray-700 blur-[4px] select-none ml-1">${lockedText.substring(0, 200)}...</span>
+                    `;
+                    outputText.classList.add('fade-bottom');
+                    
+                    // Munculkan Paywall setelah 2 detik membaca
+                    setTimeout(() => {
+                        paywallOverlay.classList.remove('hidden');
+                    }, 2000);
+                } else {
+                    outputText.textContent = data.result;
+                }
+
+                statusBadge.className = "text-xs bg-green-900 text-green-400 px-2 py-1 rounded shadow-[0_0_8px_#4ade80]";
+                statusBadge.textContent = "100% Human Score";
+            } catch (error) {
+                console.error(error);
+                statusBadge.className = "text-xs bg-red-900 text-red-400 px-2 py-1 rounded";
+                statusBadge.textContent = "Error";
+                outputText.textContent = "Terjadi kesalahan sistem. Silakan coba lagi.";
+            } finally {
+                humanizeBtn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> HUMANIZE TEKS`;
+                humanizeBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
