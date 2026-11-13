@@ -1,7 +1,7 @@
 /**
- * STEALTHCORE AI - HOLOGRAPHIC FEW-SHOT ENGINE v6.0 (APEX FORM)
+ * STEALTHCORE AI - HOLOGRAPHIC FEW-SHOT ENGINE v6.1 (BULLETPROOF APEX)
  * Features: D1 SQL IP Tracking, Smart Payload Truncation, The Trapdoor Paywall
- * Engine: Dual-Core Failover (Gemini 1.5 Flash -> GPT-OSS-120B)
+ * Engine: Dual-Core Failover (Gemini 1.5 Flash -> Groq Llama 3 70B)
  * Intelligence: Holographic Entropy Injection, Vocabulary Blacklist, Strict Constraint Locks
  */
 
@@ -16,66 +16,65 @@ export async function onRequestPost(context) {
         
         // Anti-Bot & Scraper Protection
         if (userAgent === 'unknown' || userAgent.includes('curl') || userAgent.includes('python-requests')) {
-            return new Response(JSON.stringify({ error: "Access denied. Traffic anomaly detected." }), { status: 403 });
+            return new Response(JSON.stringify({ error: "Access denied. Traffic anomaly detected." }), { status: 403, headers: { 'Content-Type': 'application/json' } });
         }
 
-        const { text } = await request.json();
+        let body;
+        try {
+            body = await request.json();
+        } catch (e) {
+            return new Response(JSON.stringify({ error: "Invalid JSON payload." }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+        }
+
+        const { text } = body;
 
         if (!text || typeof text !== 'string' || text.trim().length === 0 || text.length > 10000) {
-            return new Response(JSON.stringify({ error: "Invalid payload or exceeds maximum limit." }), { status: 400 });
+            return new Response(JSON.stringify({ error: "Invalid payload or exceeds maximum limit (10,000 chars)." }), { status: 400, headers: { 'Content-Type': 'application/json' } });
         }
 
         // 2. D1 DATABASE CHECK (The Trapdoor Logic)
         let isPro = false;
         let isLocked = false;
         
-        // PRA-PEMROSESAN: Pembersihan spasi putih ekstrem
         const cleanInputText = text.replace(/\s+/g, ' ').trim();
         let wordsArr = cleanInputText.split(' ');
         let lockedWordCount = 0;
 
-        try {
-            const { results } = await DB.prepare(`SELECT * FROM ip_tracking WHERE ip_address = ?`).bind(clientIP).all();
-            
-            if (results.length === 0) {
-                // PENGGUNA BARU: Berikan 1x akses penuh gratis
-                await DB.prepare(
-                    `INSERT INTO ip_tracking (ip_address, free_uses_left, is_pro) VALUES (?, 0, 0)`
-                ).bind(clientIP).run();
-                isLocked = false; 
-            } else {
-                // PENGGUNA LAMA
-                const user = results[0];
-                if (user.is_pro === 1) {
-                    isPro = true;
-                    isLocked = false;
-                } else if (user.free_uses_left > 0) {
-                    // Masih punya kuota gratis
-                    await DB.prepare(`UPDATE ip_tracking SET free_uses_left = free_uses_left - 1, total_requests = total_requests + 1 WHERE ip_address = ?`).bind(clientIP).run();
-                    isLocked = false;
+        if (DB) {
+            try {
+                const { results } = await DB.prepare(`SELECT * FROM ip_tracking WHERE ip_address = ?`).bind(clientIP).all();
+                
+                if (!results || results.length === 0) {
+                    await DB.prepare(
+                        `INSERT INTO ip_tracking (ip_address, free_uses_left, is_pro) VALUES (?, 0, 0)`
+                    ).bind(clientIP).run();
+                    isLocked = false; 
                 } else {
-                    // KUOTA EXHAUSTED -> AKTIFKAN BLACKOUT PAYWALL
-                    isLocked = true;
-                    lockedWordCount = wordsArr.length > 150 ? wordsArr.length - 150 : 0;
-                    
-                    // Smart Truncation: Potong input HANYA 150 kata untuk menghemat biaya API
-                    if (wordsArr.length > 150) {
-                        wordsArr = wordsArr.slice(0, 150);
+                    const user = results[0];
+                    if (user.is_pro === 1) {
+                        isPro = true;
+                        isLocked = false;
+                    } else if (user.free_uses_left > 0) {
+                        await DB.prepare(`UPDATE ip_tracking SET free_uses_left = free_uses_left - 1, total_requests = total_requests + 1 WHERE ip_address = ?`).bind(clientIP).run();
+                        isLocked = false;
+                    } else {
+                        isLocked = true;
+                        lockedWordCount = wordsArr.length > 150 ? wordsArr.length - 150 : 0;
+                        if (wordsArr.length > 150) {
+                            wordsArr = wordsArr.slice(0, 150);
+                        }
+                        await DB.prepare(`UPDATE ip_tracking SET total_requests = total_requests + 1 WHERE ip_address = ?`).bind(clientIP).run();
                     }
-                    await DB.prepare(`UPDATE ip_tracking SET total_requests = total_requests + 1 WHERE ip_address = ?`).bind(clientIP).run();
                 }
+            } catch (dbError) {
+                console.error("D1 Database Error:", dbError);
+                isLocked = false; 
             }
-        } catch (dbError) {
-            console.error("D1 Database Error:", dbError);
-            // Fall-open: Kunci pengguna agar sistem tidak rugi jika DB error
-            isLocked = true;
-            lockedWordCount = wordsArr.length > 150 ? wordsArr.length - 150 : 0;
-            if (wordsArr.length > 150) wordsArr = wordsArr.slice(0, 150);
         }
 
         const processedInputText = wordsArr.join(" "); 
         
-        // 3. THE HOLOGRAPHIC FEW-SHOT ENGINE (Inti Kesempurnaan)
+        // 3. THE HOLOGRAPHIC FEW-SHOT ENGINE
         const GEMINI_API_KEY = context.env.GEMINI_API_KEY;
         const GROQ_API_KEY = context.env.GROQ_API_KEY;
 
@@ -95,59 +94,91 @@ HUMAN REFERENCE 2 (Narrative):
 FINAL INSTRUCTION: Analyze the jagged rhythm, blunt phrasing, and lack of robotic transitions in the Human References above. Apply this exact mathematical entropy to the user's input text. Return ONLY the rewritten text. No introductions, no formatting, no markdown.`;
 
         let humanizedText = "";
-        const fetchTimeout = (ms) => {
+        let apiSuccess = false;
+
+        const fetchWithTimeout = async (url, options = {}, timeoutMs = 15000) => {
             const controller = new AbortController();
-            setTimeout(() => controller.abort(), ms);
-            return controller;
+            const id = setTimeout(() => controller.abort(), timeoutMs);
+            try {
+                const response = await fetch(url, {
+                    ...options,
+                    signal: controller.signal
+                });
+                clearTimeout(id);
+                return response;
+            } catch (error) {
+                clearTimeout(id);
+                throw error;
+            }
         };
 
-        try {
-            // ENGINE 1: GEMINI FLASH (Primary)
-            const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-            // NAIKKAN TIMEOUT KE 15 DETIK: Memberikan napas bagi AI untuk menganalisis hologram manusia
-            const geminiResponse = await fetch(geminiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                signal: fetchTimeout(15000).signal,
-                body: JSON.stringify({
-                    contents: [{ role: "user", parts: [{ text: `${systemPrompt}\n\nOriginal Text to Humanize:\n"""\n${processedInputText}\n"""` }] }],
-                    generationConfig: { temperature: 0.85, topK: 40, topP: 0.80 }
-                })
-            });
+        // Attempt 1: Gemini Flash
+        if (GEMINI_API_KEY) {
+            try {
+                const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+                const geminiResponse = await fetchWithTimeout(geminiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ role: "user", parts: [{ text: `${systemPrompt}\n\nOriginal Text to Humanize:\n"""\n${processedInputText}\n"""` }] }],
+                        generationConfig: { temperature: 0.85, topK: 40, topP: 0.80 }
+                    })
+                }, 15000);
 
-            if (!geminiResponse.ok) throw new Error("Gemini API Error or Timeout");
-            const geminiData = await geminiResponse.json();
-            
-            if (!geminiData.candidates || geminiData.candidates.length === 0) throw new Error("Gemini empty response");
-            humanizedText = geminiData.candidates[0].content.parts[0].text;
-
-        } catch (error) {
-            console.warn("Primary Engine Failed. Switching to Groq Node...", error.message);
-            // ENGINE 2: GROQ LPU (Failover)
-            const groqUrl = "https://api.groq.com/openai/v1/chat/completions";
-            const groqResponse = await fetch(groqUrl, {
-                method: 'POST',
-                headers: { 'Authorization': `Bearer ${GROQ_API_KEY}`, 'Content-Type': 'application/json' },
-                signal: fetchTimeout(10000).signal,
-                body: JSON.stringify({
-                    // FIX: Gunakan nama model Groq asli yang sangat cepat dan pintar
-                    model: "llama3-70b-8192", 
-                    messages: [
-                        { role: "system", content: systemPrompt },
-                        { role: "user", content: `Original Text to Humanize:\n"""\n${processedInputText}\n"""` }
-                    ],
-                    temperature: 0.85,
-                    top_p: 0.80,
-                    max_tokens: 3000
-                })
-            });
-
-            if (!groqResponse.ok) throw new Error("Critical: All nodes down.");
-            const groqData = await groqResponse.json();
-            humanizedText = groqData.choices[0].message.content;
+                if (geminiResponse.ok) {
+                    const geminiData = await geminiResponse.json();
+                    if (geminiData.candidates && geminiData.candidates.length > 0 && geminiData.candidates[0].content?.parts?.[0]?.text) {
+                        humanizedText = geminiData.candidates[0].content.parts[0].text;
+                        apiSuccess = true;
+                    }
+                }
+            } catch (e) {
+                console.warn("Gemini Engine failed/timed out:", e.message);
+            }
         }
 
-        // 4. MICRO-SANITIZER (Pembersihan Spasi Mutlak)
+        // Attempt 2: Groq LPU (Failover)
+        if (!apiSuccess && GROQ_API_KEY) {
+            try {
+                const groqUrl = "https://api.groq.com/openai/v1/chat/completions";
+                const groqResponse = await fetchWithTimeout(groqUrl, {
+                    method: 'POST',
+                    headers: { 
+                        'Authorization': `Bearer ${GROQ_API_KEY}`, 
+                        'Content-Type': 'application/json' 
+                    },
+                    body: JSON.stringify({
+                        model: "llama3-70b-8192",
+                        messages: [
+                            { role: "system", content: systemPrompt },
+                            { role: "user", content: `Original Text to Humanize:\n"""\n${processedInputText}\n"""` }
+                        ],
+                        temperature: 0.85,
+                        top_p: 0.80,
+                        max_tokens: 3000
+                    })
+                }, 12000);
+
+                if (groqResponse.ok) {
+                    const groqData = await groqResponse.json();
+                    if (groqData.choices && groqData.choices.length > 0 && groqData.choices[0].message?.content) {
+                        humanizedText = groqData.choices[0].message.content;
+                        apiSuccess = true;
+                    }
+                }
+            } catch (e) {
+                console.warn("Groq Engine failed/timed out:", e.message);
+            }
+        }
+
+        if (!apiSuccess || !humanizedText) {
+            return new Response(JSON.stringify({ error: "All AI inference nodes timed out or failed. Please check your API keys." }), {
+                status: 500,
+                headers: { 'Content-Type': 'application/json' }
+            });
+        }
+
+        // 4. MICRO-SANITIZER
         humanizedText = humanizedText.replace(/\s+/g, ' ').trim();
 
         // 5. SECURE DELIVERY
@@ -167,7 +198,7 @@ FINAL INSTRUCTION: Analyze the jagged rhythm, blunt phrasing, and lack of roboti
         });
 
     } catch (error) {
-        return new Response(JSON.stringify({ error: error.message }), {
+        return new Response(JSON.stringify({ error: "Server Internal Error: " + error.message }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }
         });
