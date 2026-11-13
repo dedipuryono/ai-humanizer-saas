@@ -5,99 +5,163 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="StealthCore AI - Enterprise cognitive AI text humanizer. Evade Turnitin, GPTZero, and Originality algorithms.">
     <title>StealthCore AI | Enterprise Anti-Detection Engine</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Config for Theming & Obsidian Architecture -->
     <script>
         tailwind.config = {
+            darkMode: 'class', // Enables toggleable dark mode
             theme: {
                 extend: {
                     fontFamily: { 
-                        sans: ['Inter', 'sans-serif'], // 90% of UI (Corporate Clean)
-                        mono: ['JetBrains Mono', 'monospace'] // 10% of UI (Technical Data)
+                        sans: ['Inter', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'] 
                     },
                     colors: { 
                         obsidian: {
-                            950: '#050505', // True Black background
-                            900: '#0a0a0a', // Panel backgrounds
-                            800: '#141414', // Elevated panels
-                            border: '#1f1f1f' // Micro-borders
+                            950: '#050505',
+                            900: '#0a0a0a',
+                            800: '#141414',
+                            border: '#1f1f1f'
+                        },
+                        clinical: {
+                            50: '#fafafa',
+                            100: '#f4f4f5',
+                            200: '#e4e4e7',
+                            border: '#d4d4d8'
                         }
                     },
                     backgroundImage: {
-                        'grid-pattern': 'radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px)'
+                        'grid-dark': 'radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px)',
+                        'grid-light': 'radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px)'
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Obsidian Stealth Architecture */
-        body { background-color: #050505; color: #ededed; }
-        .bg-grid { background-size: 24px 24px; }
+        /* Base Grid & Theme Transitions */
+        body { transition: background-color 0.3s, color 0.3s; }
+        .bg-grid-size { background-size: 24px 24px; }
         
-        /* Tactile Panels with Apple-style Micro-borders */
+        /* Tactile Panels */
         .tactical-panel {
-            background-color: #0a0a0a;
-            border: 1px solid #1f1f1f;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 4px 20px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
             border-radius: 12px;
         }
         
-        /* Magnetic CTA Button */
-        .btn-magnetic {
-            background-color: #ffffff;
-            color: #000000;
-            border: 1px solid #ffffff;
-            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,1), 0 0 20px rgba(255,255,255,0.1);
-            transition: all 0.2s ease;
+        /* DARK MODE STYLES */
+        .dark body { background-color: #050505; color: #ededed; }
+        .dark .bg-adaptive-grid { background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px); }
+        .dark .tactical-panel {
+            background-color: #0a0a0a;
+            border: 1px solid #1f1f1f;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 4px 20px rgba(0,0,0,0.5);
         }
-        .btn-magnetic:hover {
+        .dark .panel-header { background-color: #141414; border-bottom: 1px solid #1f1f1f; }
+        .dark .editor-bg { background-color: transparent; }
+        .dark .output-bg { background-color: rgba(10, 10, 10, 0.5); }
+        
+        /* LIGHT MODE STYLES */
+        body:not(.dark) { background-color: #fafafa; color: #18181b; }
+        body:not(.dark) .bg-adaptive-grid { background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px); }
+        body:not(.dark) .tactical-panel {
+            background-color: #ffffff;
+            border: 1px solid #e4e4e7;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        body:not(.dark) .panel-header { background-color: #f4f4f5; border-bottom: 1px solid #e4e4e7; }
+        body:not(.dark) .editor-bg { background-color: transparent; }
+        body:not(.dark) .output-bg { background-color: #fafafa; }
+
+        /* Magnetic CTA Button (Adaptive) */
+        .btn-magnetic {
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .dark .btn-magnetic {
+            background-color: #ffffff; color: #000000; border: 1px solid #ffffff;
+            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,1), 0 0 20px rgba(255,255,255,0.1);
+        }
+        .dark .btn-magnetic:hover {
             background-color: #e5e5e5;
             box-shadow: inset 0 -2px 0 rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,1), 0 0 30px rgba(255,255,255,0.2);
             transform: translateY(-1px);
         }
-        .btn-magnetic:disabled {
-            background-color: #333; color: #666; border-color: #333; box-shadow: none; transform: none; cursor: not-allowed;
+        body:not(.dark) .btn-magnetic {
+            background-color: #18181b; color: #ffffff; border: 1px solid #18181b;
+            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.2), 0 4px 15px rgba(0,0,0,0.1);
         }
+        body:not(.dark) .btn-magnetic:hover {
+            background-color: #27272a; transform: translateY(-1px);
+        }
+        .btn-magnetic:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
         /* Paywall Blackout Lock */
         .lock-scroll { overflow: hidden; height: 100vh; }
         
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #1f1f1f; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #333; }
+        .dark ::-webkit-scrollbar-track { background: #050505; }
+        .dark ::-webkit-scrollbar-thumb { background: #1f1f1f; border-radius: 4px; }
+        body:not(.dark) ::-webkit-scrollbar-track { background: #fafafa; }
+        body:not(.dark) ::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 4px; }
 
-        /* Terminal Blink */
+        /* Terminal Blink & Text Blur */
         .blink { animation: blinker 1s linear infinite; }
         @keyframes blinker { 50% { opacity: 0; } }
-
-        /* Text Blur for Paywall */
-        .text-blur { color: transparent; text-shadow: 0 0 8px rgba(255,255,255,0.5); user-select: none; }
+        .text-blur { color: transparent; text-shadow: 0 0 8px rgba(150,150,150,0.5); user-select: none; }
+        
+        /* Theme Dropdown */
+        .theme-dropdown { display: none; }
+        .theme-dropdown.show { display: block; animation: fadeIn 0.2s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="antialiased bg-grid relative selection:bg-white selection:text-black">
+<body class="antialiased bg-adaptive-grid bg-grid-size relative selection:bg-neutral-300 selection:text-black dark:selection:bg-white dark:selection:text-black">
 
-    <!-- Ambient Mesh Glow (Subtle) -->
-    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white opacity-[0.015] blur-[120px] pointer-events-none z-0"></div>
+    <!-- Ambient Mesh Glow (Subtle - Dark Mode Only) -->
+    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white opacity-[0.015] blur-[120px] pointer-events-none z-0 hidden dark:block"></div>
 
     <!-- NAVBAR -->
-    <nav class="fixed w-full z-40 bg-obsidian-950/80 backdrop-blur-md border-b border-obsidian-border">
+    <nav class="fixed w-full z-40 bg-white/80 dark:bg-obsidian-950/80 backdrop-blur-md border-b border-clinical-border dark:border-obsidian-border transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
-                        <i class="fa-solid fa-layer-group text-black text-xs"></i>
+                    <div class="w-6 h-6 bg-black dark:bg-white rounded flex items-center justify-center">
+                        <i class="fa-solid fa-layer-group text-white dark:text-black text-xs"></i>
                     </div>
-                    <span class="font-sans font-bold text-lg text-white tracking-tight">StealthCore</span>
+                    <span class="font-sans font-bold text-lg text-neutral-900 dark:text-white tracking-tight">StealthCore</span>
                 </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8 text-sm text-neutral-400">
-                        <a href="#workspace" class="hover:text-white transition-colors">Engine</a>
-                        <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
-                        <a href="#faq" class="hover:text-white transition-colors">Intel</a>
+                
+                <div class="flex items-center gap-6">
+                    <div class="hidden md:flex items-baseline space-x-8 text-sm text-neutral-600 dark:text-neutral-400">
+                        <a href="#workspace" class="hover:text-black dark:hover:text-white transition-colors">Engine</a>
+                        <a href="#pricing" class="hover:text-black dark:hover:text-white transition-colors">Pricing</a>
+                        <a href="#faq" class="hover:text-black dark:hover:text-white transition-colors">Intel</a>
+                    </div>
+                    
+                    <!-- Theme Toggle (Supabase Style) -->
+                    <div class="relative">
+                        <button id="themeToggleBtn" class="p-2 text-neutral-500 hover:text-black dark:hover:text-white transition-colors rounded-md hover:bg-neutral-100 dark:hover:bg-obsidian-800">
+                            <i class="fa-solid fa-desktop" id="currentThemeIcon"></i>
+                        </button>
+                        <div id="themeDropdown" class="theme-dropdown absolute right-0 mt-2 w-36 bg-white dark:bg-obsidian-900 border border-clinical-border dark:border-obsidian-border rounded-lg shadow-lg py-1 z-50">
+                            <button onclick="setTheme('system')" class="w-full text-left px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-obsidian-800 flex items-center gap-2">
+                                <i class="fa-solid fa-desktop w-4"></i> System
+                            </button>
+                            <button onclick="setTheme('dark')" class="w-full text-left px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-obsidian-800 flex items-center gap-2">
+                                <i class="fa-solid fa-moon w-4"></i> Dark
+                            </button>
+                            <button onclick="setTheme('light')" class="w-full text-left px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-obsidian-800 flex items-center gap-2">
+                                <i class="fa-solid fa-sun w-4"></i> Light
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -109,194 +173,221 @@
         
         <!-- Hero Copy -->
         <div class="text-center mb-10">
-            <h1 class="text-4xl md:text-5xl font-sans font-bold text-white mb-4 tracking-tight">
+            <h1 class="text-4xl md:text-5xl font-sans font-bold text-neutral-900 dark:text-white mb-4 tracking-tight">
                 Evade algorithmic detection.
             </h1>
-            <p class="text-neutral-400 max-w-2xl mx-auto text-lg font-sans">
+            <p class="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto text-lg font-sans">
                 Military-grade cognitive paraphrasing. Render your AI-generated text completely invisible to Turnitin, GPTZero, and Google HCU.
             </p>
         </div>
 
         <!-- THE ARSENAL (Dual Pane) -->
-        <div class="tactical-panel flex flex-col mb-8 overflow-hidden">
+        <div class="tactical-panel flex flex-col mb-8 overflow-hidden relative">
             
             <!-- System Header & Scarcity Meter -->
-            <div class="flex justify-between items-center bg-obsidian-800 border-b border-obsidian-border px-4 py-3">
+            <div class="panel-header flex justify-between items-center px-4 py-3">
                 <div class="flex items-center gap-3 font-mono text-[10px] md:text-xs text-neutral-500 uppercase tracking-widest">
                     <span class="flex h-2 w-2 relative">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-40"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-neutral-900 dark:bg-white opacity-40"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-neutral-900 dark:bg-white"></span>
                     </span>
                     <span>Node: GPT-OSS-120B / LPU Edge</span>
                 </div>
                 
-                <!-- SCARCITY METER (Point 3) -->
-                <div id="quotaMeter" class="font-mono text-[10px] md:text-xs font-bold text-emerald-400 border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 rounded uppercase tracking-wider transition-colors duration-500">
+                <!-- SCARCITY METER -->
+                <div id="quotaMeter" class="font-mono text-[10px] md:text-xs font-bold text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 rounded uppercase tracking-wider transition-colors duration-500">
                     <i class="fa-solid fa-satellite-dish mr-1 blink"></i> FREE TIER: 1/1 BYPASS REMAINING
                 </div>
             </div>
 
             <!-- Editors -->
-            <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-obsidian-border">
+            <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-clinical-border dark:divide-obsidian-border">
                 
                 <!-- Input Panel -->
-                <div class="p-5 flex flex-col h-[450px]">
+                <div class="p-5 flex flex-col h-[450px] editor-bg">
                     <div class="flex justify-between items-end mb-4">
-                        <span class="font-sans text-sm font-semibold text-neutral-300">Input (Flagged AI)</span>
+                        <span class="font-sans text-sm font-semibold text-neutral-700 dark:text-neutral-300">Input (Flagged AI)</span>
                         <div class="flex items-center gap-3">
-                            <!-- ONE-CLICK EPIPHANY (Point 2) -->
-                            <button id="loadSampleBtn" class="font-mono text-[10px] text-neutral-500 hover:text-white underline transition-colors">Load Sample Payload</button>
-                            <span id="wordCount" class="text-[10px] text-neutral-600 font-mono">0 W</span>
+                            <button id="loadSampleBtn" class="font-mono text-[10px] text-neutral-500 hover:text-neutral-900 dark:hover:text-white underline transition-colors">Load Sample Payload</button>
+                            <span id="wordCount" class="text-[10px] text-neutral-500 font-mono">0 W</span>
                         </div>
                     </div>
-                    <textarea id="inputText" class="w-full flex-grow bg-transparent text-neutral-300 resize-none outline-none focus:ring-0 placeholder-neutral-700 font-sans text-base leading-relaxed" placeholder="Paste your detectable text here to initiate neutralization..."></textarea>
+                    <textarea id="inputText" class="w-full flex-grow bg-transparent text-neutral-800 dark:text-neutral-300 resize-none outline-none focus:ring-0 placeholder-neutral-400 dark:placeholder-neutral-700 font-sans text-base leading-relaxed" placeholder="Paste your detectable text here to initiate neutralization..."></textarea>
                 </div>
 
                 <!-- Output Panel -->
-                <div class="p-5 flex flex-col h-[450px] relative bg-obsidian-950/50" id="outputContainer">
+                <div class="p-5 flex flex-col h-[450px] relative output-bg" id="outputContainer">
                     <div class="flex justify-between items-end mb-4">
-                        <span class="font-sans text-sm font-semibold text-white flex items-center">
-                            <i class="fa-solid fa-fingerprint text-neutral-500 mr-2"></i> Output (100% Human)
+                        <span class="font-sans text-sm font-semibold text-neutral-900 dark:text-white flex items-center">
+                            <i class="fa-solid fa-fingerprint text-neutral-400 dark:text-neutral-500 mr-2"></i> Output (100% Human)
                         </span>
-                        <button id="copyBtn" class="text-[10px] font-mono text-neutral-500 hover:text-white hidden transition-colors uppercase tracking-widest"><i class="fa-regular fa-copy mr-1"></i> Copy</button>
+                        <button id="copyBtn" class="text-[10px] font-mono text-neutral-500 hover:text-neutral-900 dark:hover:text-white hidden transition-colors uppercase tracking-widest"><i class="fa-regular fa-copy mr-1"></i> Copy</button>
                     </div>
                     
+                    <!-- Live Analytics Bar (Illusion of Deep Analysis) -->
+                    <div id="analyticsBar" class="hidden mb-4 p-3 bg-neutral-100 dark:bg-obsidian-800 border border-clinical-border dark:border-obsidian-border rounded-lg flex justify-between items-center font-mono text-[10px] text-neutral-600 dark:text-neutral-400">
+                        <span><i class="fa-solid fa-chart-line text-emerald-500 mr-1"></i> Burstiness: <strong class="text-neutral-900 dark:text-white">87</strong></span>
+                        <span><i class="fa-solid fa-brain text-purple-500 mr-1"></i> Perplexity: <strong class="text-neutral-900 dark:text-white">High</strong></span>
+                        <span><i class="fa-solid fa-shield text-blue-500 mr-1"></i> Markov: <strong class="text-neutral-900 dark:text-white">Safe</strong></span>
+                    </div>
+
                     <!-- Result Text -->
-                    <div id="outputText" class="w-full flex-grow overflow-y-auto text-neutral-400 font-sans text-base whitespace-pre-wrap leading-relaxed">
+                    <div id="outputText" class="w-full flex-grow overflow-y-auto text-neutral-600 dark:text-neutral-400 font-sans text-base whitespace-pre-wrap leading-relaxed">
                         Awaiting execution command...
                     </div>
 
-                    <!-- EXECUTION THEATER (Point 1 - Terminal Animation) -->
-                    <div id="executionTheater" class="absolute inset-0 bg-obsidian-950 z-10 hidden flex-col p-6 font-mono text-xs md:text-sm text-neutral-400 overflow-hidden">
-                        <div id="termLine1" class="hidden text-neutral-500">> Initializing LPU Edge connection... <span class="text-white">OK</span></div>
-                        <div id="termLine2" class="hidden mt-2">> Scanning for Markov chain footprints... <span class="text-white">DETECTED</span></div>
+                    <!-- EXECUTION THEATER -->
+                    <div id="executionTheater" class="absolute inset-0 bg-white dark:bg-obsidian-950 z-10 hidden flex-col p-6 font-mono text-xs md:text-sm text-neutral-500 dark:text-neutral-400 overflow-hidden">
+                        <div id="termLine1" class="hidden">> Initializing LPU Edge connection... <span class="text-neutral-900 dark:text-white">OK</span></div>
+                        <div id="termLine2" class="hidden mt-2">> Scanning for Markov chain footprints... <span class="text-neutral-900 dark:text-white">DETECTED</span></div>
                         <div id="termLine3" class="hidden mt-2">> Dismantling predictive text vectors...</div>
-                        <div id="termLine4" class="hidden mt-2">> Injecting cognitive burstiness & perplexity... <span class="text-emerald-400 blink">PROCESSING</span></div>
-                        <div id="termLine5" class="hidden mt-2 text-white">> Neutralization complete. Bypassing detectors...</div>
+                        <div id="termLine4" class="hidden mt-2">> Injecting cognitive burstiness & perplexity... <span class="text-emerald-500 blink">PROCESSING</span></div>
+                        <div id="termLine5" class="hidden mt-2 text-neutral-900 dark:text-white">> Neutralization complete. Bypassing detectors...</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Magnetic CTA & Micro-Trust Bar (Point 5) -->
+        <!-- Magnetic CTA & Trust Badges -->
         <div class="text-center max-w-md mx-auto">
             <button id="humanizeBtn" class="btn-magnetic w-full py-4 rounded-lg font-sans font-bold text-lg uppercase tracking-wide">
                 Humanize Text
             </button>
             
-            <div class="flex flex-wrap justify-center gap-4 text-[10px] text-neutral-600 font-mono uppercase tracking-widest mt-4">
+            <div class="flex flex-wrap justify-center gap-4 text-[10px] text-neutral-500 font-mono uppercase tracking-widest mt-4">
                 <span class="flex items-center"><i class="fa-solid fa-shield-halved mr-1"></i> Zero-Log Policy</span>
                 <span class="flex items-center"><i class="fa-solid fa-server mr-1"></i> Groq LPU Powered</span>
             </div>
         </div>
     </section>
 
-    <!-- BLACKOUT PAYWALL (Point 4 - Initially Hidden, rendered at body level) -->
-    <div id="blackoutPaywall" class="fixed inset-0 bg-obsidian-950/95 backdrop-blur-sm z-[100] hidden flex-col items-center justify-center p-4">
-        <div class="tactical-panel p-8 md:p-12 max-w-lg w-full text-center relative overflow-hidden animate-[slideUp_0.4s_ease-out_forwards]">
+    <!-- BLACKOUT PAYWALL -->
+    <div id="blackoutPaywall" class="fixed inset-0 bg-neutral-900/90 dark:bg-obsidian-950/95 backdrop-blur-sm z-[100] hidden flex-col items-center justify-center p-4">
+        <div class="tactical-panel !bg-white dark:!bg-obsidian-900 p-8 md:p-12 max-w-lg w-full text-center relative overflow-hidden animate-[slideUp_0.4s_ease-out_forwards]">
             <!-- Top highlight bar -->
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white to-transparent opacity-20"></div>
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-neutral-400 dark:via-white to-transparent opacity-20"></div>
             
-            <div class="w-16 h-16 mx-auto bg-obsidian-800 border border-obsidian-border rounded-full flex items-center justify-center mb-6">
-                <i class="fa-solid fa-lock text-white text-2xl"></i>
+            <div class="w-16 h-16 mx-auto bg-neutral-100 dark:bg-obsidian-800 border border-clinical-border dark:border-obsidian-border rounded-full flex items-center justify-center mb-6">
+                <i class="fa-solid fa-lock text-neutral-900 dark:text-white text-2xl"></i>
             </div>
             
-            <h2 class="text-2xl font-sans font-bold text-white mb-2 tracking-tight">Security Clearance Required</h2>
-            <p class="text-neutral-400 text-sm mb-8">Your free trial IP quota has been exhausted. The remainder of your humanized text is encrypted.</p>
+            <h2 class="text-2xl font-sans font-bold text-neutral-900 dark:text-white mb-2 tracking-tight">Security Clearance Required</h2>
+            <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-8">Your free trial IP quota has been exhausted. The remainder of your humanized text is encrypted.</p>
             
             <!-- Decoy Pricing (Anchoring) -->
-            <div class="bg-obsidian-950 border border-obsidian-border rounded-lg p-6 mb-8 text-left">
-                <div class="flex justify-between items-center mb-2 border-b border-obsidian-border/50 pb-2">
+            <div class="bg-neutral-50 dark:bg-obsidian-950 border border-clinical-border dark:border-obsidian-border rounded-lg p-6 mb-8 text-left">
+                <div class="flex justify-between items-center mb-2 border-b border-clinical-border dark:border-obsidian-border/50 pb-2">
                     <span class="text-neutral-500 font-mono text-xs uppercase">Retail Price</span>
-                    <span class="text-neutral-600 line-through font-mono text-sm">$14.99/mo</span>
+                    <span class="text-neutral-400 dark:text-neutral-600 line-through font-mono text-sm">$14.99/mo</span>
                 </div>
                 <div class="flex justify-between items-center pt-2">
-                    <span class="text-white font-sans font-bold">Your IP Offer (Pro)</span>
-                    <span class="text-2xl font-sans font-bold text-white">$4.99<span class="text-sm text-neutral-500 font-normal">/mo</span></span>
+                    <span class="text-neutral-900 dark:text-white font-sans font-bold">Your IP Offer (Pro)</span>
+                    <span class="text-2xl font-sans font-bold text-neutral-900 dark:text-white">$4.99<span class="text-sm text-neutral-500 font-normal">/mo</span></span>
                 </div>
-                <ul class="mt-4 space-y-2 text-xs text-neutral-400 font-sans">
-                    <li class="flex items-center"><i class="fa-solid fa-check text-white mr-2"></i> 50,000 words limit</li>
-                    <li class="flex items-center"><i class="fa-solid fa-check text-white mr-2"></i> 100% Turnitin Bypass</li>
+                <ul class="mt-4 space-y-2 text-xs text-neutral-600 dark:text-neutral-400 font-sans">
+                    <li class="flex items-center"><i class="fa-solid fa-check text-neutral-900 dark:text-white mr-2"></i> 50,000 words limit</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-neutral-900 dark:text-white mr-2"></i> 100% Turnitin Bypass</li>
                 </ul>
             </div>
 
-            <!-- Checkout Action -->
-            <a href="#" class="btn-magnetic block w-full py-4 rounded-lg font-sans font-bold text-sm uppercase tracking-wide">
-                Unlock Full Access
+            <a href="#pricing" onclick="closePaywall()" class="btn-magnetic block w-full py-4 rounded-lg font-sans font-bold text-sm uppercase tracking-wide text-center">
+                View Access Plans
             </a>
-            <p class="text-[10px] text-neutral-600 mt-4 font-mono uppercase tracking-widest">Secure Checkout via LemonSqueezy</p>
+            <p class="text-[10px] text-neutral-500 mt-4 font-mono uppercase tracking-widest">Secure Checkout via LemonSqueezy</p>
         </div>
     </div>
 
-    <!-- PRICING SECTION -->
-    <section id="pricing" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-obsidian-border">
+    <!-- PRICING SECTION (3-COLUMN TACTICAL) -->
+    <section id="pricing" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-clinical-border dark:border-obsidian-border relative z-10">
         <div class="text-center mb-16">
-            <h2 class="text-3xl font-sans font-bold text-white mb-3 tracking-tight">Tactical Deployment</h2>
-            <p class="text-neutral-400 text-base">Select your security clearance level.</p>
+            <h2 class="text-3xl font-sans font-bold text-neutral-900 dark:text-white mb-3 tracking-tight">Tactical Deployment</h2>
+            <p class="text-neutral-600 dark:text-neutral-400 text-base">Select your security clearance level.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            <!-- Panic Pass -->
-            <div class="tactical-panel p-8 flex flex-col">
-                <div class="text-[10px] text-neutral-500 font-mono uppercase tracking-widest mb-4">One-Time Payment</div>
-                <h3 class="text-xl font-sans font-bold text-white mb-2">Student Panic Pass</h3>
-                <p class="text-neutral-400 text-sm mb-8 h-10">Pass the detectors tonight. No recurring subscription.</p>
-                <div class="mb-8"><span class="text-4xl font-sans font-bold text-white">$2.99</span><span class="text-neutral-500 font-mono text-sm"> / 3 Days</span></div>
-                <a href="#" class="w-full text-center border border-obsidian-border hover:bg-white hover:text-black py-3 rounded text-sm font-bold transition-colors mb-8 uppercase tracking-wide">Get 3-Day Access</a>
-                <ul class="space-y-3 text-sm text-neutral-400 flex-grow">
-                    <li class="flex items-center"><i class="fa-solid fa-check text-white mr-3 text-xs"></i> 20,000 words limit</li>
-                    <li class="flex items-center"><i class="fa-solid fa-check text-white mr-3 text-xs"></i> Guaranteed Bypass</li>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto items-center">
+            
+            <!-- Column 1: Trial Node (Free Anchor) -->
+            <div class="tactical-panel p-8 flex flex-col opacity-90 hover:opacity-100 h-full">
+                <div class="text-[10px] text-neutral-500 font-mono uppercase tracking-widest mb-4">Trial Node</div>
+                <h3 class="text-xl font-sans font-bold text-neutral-900 dark:text-white mb-2">Free</h3>
+                <p class="text-neutral-500 text-sm mb-8 h-10">Basic text manipulation. Hard IP limit enforced.</p>
+                <div class="mb-8"><span class="text-4xl font-sans font-bold text-neutral-900 dark:text-white">$0</span></div>
+                <button disabled class="w-full text-center bg-neutral-100 dark:bg-obsidian-800 text-neutral-400 py-3 rounded text-sm font-bold mb-8 uppercase tracking-wide cursor-not-allowed border border-clinical-border dark:border-obsidian-border">Current Plan</button>
+                <ul class="space-y-3 text-sm text-neutral-500 flex-grow">
+                    <li class="flex items-center"><i class="fa-solid fa-check mr-3 text-xs"></i> 1 Bypass Execution</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check mr-3 text-xs"></i> 150 Words Limit</li>
+                    <li class="flex items-center"><i class="fa-solid fa-xmark mr-3 text-xs opacity-50"></i> Standard Queue</li>
                 </ul>
             </div>
 
-            <!-- Pro -->
-            <div class="tactical-panel p-8 flex flex-col relative">
-                <!-- Highlight border top -->
-                <div class="absolute top-0 left-0 w-full h-[1px] bg-white opacity-20"></div>
+            <!-- Column 2: Panic Pass -->
+            <div class="tactical-panel p-8 flex flex-col h-full transform md:scale-105 shadow-xl dark:shadow-2xl z-10 bg-white dark:bg-obsidian-800 border-neutral-200 dark:border-obsidian-border">
+                <div class="text-[10px] text-neutral-500 font-mono uppercase tracking-widest mb-4">One-Time Payment</div>
+                <h3 class="text-xl font-sans font-bold text-neutral-900 dark:text-white mb-2">Student Panic Pass</h3>
+                <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-8 h-10">Pass the detectors tonight. No recurring subscription.</p>
+                <div class="mb-8"><span class="text-4xl font-sans font-bold text-neutral-900 dark:text-white">$2.99</span><span class="text-neutral-500 font-mono text-sm"> / 3 Days</span></div>
+                <a href="#" class="w-full text-center border-2 border-neutral-900 dark:border-white text-neutral-900 dark:text-white hover:bg-neutral-900 dark:hover:bg-white hover:text-white dark:hover:text-black py-3 rounded text-sm font-bold transition-colors mb-8 uppercase tracking-wide">Get 3-Day Access</a>
+                <ul class="space-y-3 text-sm text-neutral-700 dark:text-neutral-300 flex-grow font-medium">
+                    <li class="flex items-center"><i class="fa-solid fa-check text-emerald-500 mr-3 text-xs"></i> 20,000 words limit</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-emerald-500 mr-3 text-xs"></i> Guaranteed Turnitin Bypass</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-emerald-500 mr-3 text-xs"></i> Priority Execution</li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Pro -->
+            <div class="tactical-panel p-8 flex flex-col relative h-full">
+                <div class="absolute top-0 left-0 w-full h-[1px] bg-neutral-400 dark:bg-white opacity-20"></div>
                 
                 <div class="flex justify-between items-center mb-4">
-                    <div class="text-[10px] text-white font-mono uppercase tracking-widest">Subscription</div>
-                    <div class="text-[9px] bg-white text-black px-2 py-1 rounded font-bold uppercase tracking-widest">Recommended</div>
+                    <div class="text-[10px] text-neutral-900 dark:text-white font-mono uppercase tracking-widest">Subscription</div>
+                    <div class="text-[9px] bg-neutral-900 dark:bg-white text-white dark:text-black px-2 py-1 rounded font-bold uppercase tracking-widest shadow-sm">Enterprise Choice</div>
                 </div>
-                <h3 class="text-xl font-sans font-bold text-white mb-2">Stealth Pro</h3>
-                <p class="text-neutral-400 text-sm mb-8 h-10">For heavy content creators, agencies, and developers.</p>
-                <div class="mb-8"><span class="text-4xl font-sans font-bold text-white">$4.99</span><span class="text-neutral-500 font-mono text-sm"> / Month</span></div>
+                <h3 class="text-xl font-sans font-bold text-neutral-900 dark:text-white mb-2">Stealth Pro</h3>
+                <p class="text-neutral-500 text-sm mb-8 h-10">For heavy content creators, agencies, and developers.</p>
+                <div class="mb-8"><span class="text-4xl font-sans font-bold text-neutral-900 dark:text-white">$4.99</span><span class="text-neutral-500 font-mono text-sm"> / Month</span></div>
                 <a href="#" class="btn-magnetic w-full text-center py-3 rounded text-sm font-bold mb-8 uppercase tracking-wide">Subscribe to Pro</a>
-                <ul class="space-y-3 text-sm text-neutral-400 flex-grow">
-                    <li class="flex items-center"><i class="fa-solid fa-check text-white mr-3 text-xs"></i> 50,000 words / month</li>
-                    <li class="flex items-center"><i class="fa-solid fa-check text-white mr-3 text-xs"></i> Zero-Trust Data Wipe</li>
-                    <li class="flex items-center"><i class="fa-solid fa-check text-white mr-3 text-xs"></i> API Access Included</li>
+                <ul class="space-y-3 text-sm text-neutral-500 flex-grow">
+                    <li class="flex items-center"><i class="fa-solid fa-check text-neutral-900 dark:text-white mr-3 text-xs"></i> 50,000 words / month</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-neutral-900 dark:text-white mr-3 text-xs"></i> Zero-Trust Data Wipe</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-neutral-900 dark:text-white mr-3 text-xs"></i> API Access Included</li>
                 </ul>
             </div>
         </div>
     </section>
 
     <!-- FOOTER & LEGAL -->
-    <footer class="border-t border-obsidian-border bg-obsidian-950 pt-16 pb-8">
+    <footer class="border-t border-clinical-border dark:border-obsidian-border bg-white dark:bg-obsidian-950 pt-16 pb-8 transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-start mb-12 gap-8">
                 <div class="max-w-sm">
                     <div class="flex items-center gap-2 mb-4">
-                        <div class="w-5 h-5 bg-white rounded flex items-center justify-center">
-                            <i class="fa-solid fa-layer-group text-black text-[10px]"></i>
+                        <div class="w-5 h-5 bg-black dark:bg-white rounded flex items-center justify-center">
+                            <i class="fa-solid fa-layer-group text-white dark:text-black text-[10px]"></i>
                         </div>
-                        <span class="font-sans font-bold text-white tracking-tight">StealthCore Inc.</span>
+                        <span class="font-sans font-bold text-neutral-900 dark:text-white tracking-tight">StealthCore Inc.</span>
                     </div>
-                    <p class="text-neutral-500 text-xs leading-relaxed">
+                    <p class="text-neutral-500 text-xs leading-relaxed mb-6">
                         Engineered to protect human authenticity from flawed algorithmic evaluation. Use responsibly.
                     </p>
+                    
+                    <!-- Trust Badges (Payment Providers) -->
+                    <div class="flex gap-3 text-neutral-400 dark:text-neutral-600 text-xl">
+                        <i class="fa-brands fa-cc-stripe hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors"></i>
+                        <i class="fa-brands fa-cc-visa hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors"></i>
+                        <i class="fa-brands fa-cc-mastercard hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors"></i>
+                    </div>
                 </div>
                 <div class="flex gap-12">
                     <div>
-                        <h4 class="text-white font-sans font-semibold text-sm mb-4">Vault</h4>
+                        <h4 class="text-neutral-900 dark:text-white font-sans font-semibold text-sm mb-4">Vault</h4>
                         <ul class="space-y-2 text-xs text-neutral-500">
-                            <li><a href="/privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
-                            <li><a href="/terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
-                            <li><a href="mailto:admin@stealthcore.com" class="hover:text-white transition-colors">Contact Node</a></li>
+                            <li><a href="/privacy.html" class="hover:text-neutral-900 dark:hover:text-white transition-colors">Privacy Policy</a></li>
+                            <li><a href="/terms.html" class="hover:text-neutral-900 dark:hover:text-white transition-colors">Terms of Service</a></li>
+                            <li><a href="mailto:admin@stealthcore.com" class="hover:text-neutral-900 dark:hover:text-white transition-colors">Contact Node</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="text-white font-sans font-semibold text-sm mb-4">System</h4>
+                        <h4 class="text-neutral-900 dark:text-white font-sans font-semibold text-sm mb-4">System</h4>
                         <ul class="space-y-2 text-xs font-mono text-neutral-500">
                             <li><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block mr-2"></span>LPU: Online</li>
                             <li><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block mr-2"></span>D1: Synced</li>
@@ -304,20 +395,53 @@
                     </div>
                 </div>
             </div>
-            <div class="border-t border-obsidian-border pt-8 flex flex-col md:flex-row justify-between items-center text-[10px] text-neutral-600 font-mono uppercase tracking-widest">
+            <div class="border-t border-clinical-border dark:border-obsidian-border pt-8 flex flex-col md:flex-row justify-between items-center text-[10px] text-neutral-500 font-mono uppercase tracking-widest">
                 <p>© 2026 StealthCore AI. All rights reserved.</p>
                 <p class="mt-2 md:mt-0">Encrypted by Cloudflare</p>
             </div>
         </div>
     </footer>
 
-    <style>
-        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
-
-    <!-- THE MASTER JAVASCRIPT LOGIC -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // DOM Elements
+        // --- 1. THEME ENGINE (System, Dark, Light) ---
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeDropdown = document.getElementById('themeDropdown');
+        const currentThemeIcon = document.getElementById('currentThemeIcon');
+
+        // Toggle dropdown visibility
+        themeToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            themeDropdown.classList.toggle('show');
+        });
+        document.addEventListener('click', () => themeDropdown.classList.remove('show'));
+
+        function applyTheme(theme) {
+            if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                currentThemeIcon.className = theme === 'system' ? 'fa-solid fa-desktop' : 'fa-solid fa-moon';
+            } else {
+                document.documentElement.classList.remove('dark');
+                currentThemeIcon.className = theme === 'system' ? 'fa-solid fa-desktop' : 'fa-solid fa-sun';
+            }
+        }
+
+        function setTheme(theme) {
+            localStorage.setItem('theme', theme);
+            applyTheme(theme);
+            themeDropdown.classList.remove('show');
+        }
+
+        // Initialize Theme on load
+        const savedTheme = localStorage.getItem('theme') || 'system';
+        applyTheme(savedTheme);
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            if (localStorage.getItem('theme') === 'system') applyTheme('system');
+        });
+
+        // --- 2. WORKSPACE & API LOGIC ---
         const inputText = document.getElementById('inputText');
         const wordCount = document.getElementById('wordCount');
         const loadSampleBtn = document.getElementById('loadSampleBtn');
@@ -325,19 +449,14 @@
         
         const outputText = document.getElementById('outputText');
         const executionTheater = document.getElementById('executionTheater');
+        const analyticsBar = document.getElementById('analyticsBar');
         const copyBtn = document.getElementById('copyBtn');
         
         const quotaMeter = document.getElementById('quotaMeter');
         const blackoutPaywall = document.getElementById('blackoutPaywall');
 
-        // Theater Lines
-        const tl1 = document.getElementById('termLine1');
-        const tl2 = document.getElementById('termLine2');
-        const tl3 = document.getElementById('termLine3');
-        const tl4 = document.getElementById('termLine4');
-        const tl5 = document.getElementById('termLine5');
+        const tls = [1,2,3,4,5].map(i => document.getElementById(`termLine${i}`));
 
-        // Sample Payload (Point 2 - One-Click Epiphany)
         const samplePayload = "In today's fast-paced digital era, it is important to note that artificial intelligence has fundamentally transformed the landscape of technological innovation. Consequently, delving into the intricacies of machine learning reveals a tapestry of interconnected neural networks. In conclusion, as we navigate this comprehensive paradigm shift, society must embrace these advancements to foster sustainable growth.";
         
         loadSampleBtn.addEventListener('click', () => {
@@ -345,47 +464,45 @@
             updateWordCount();
         });
 
-        // Word Counter
         function updateWordCount() {
-            const words = inputText.value.trim().split(/\s+/).filter(word => word.length > 0).length;
+            const words = inputText.value.trim().split(/\s+/).filter(w => w.length > 0).length;
             wordCount.textContent = `${words} W`;
         }
         inputText.addEventListener('input', updateWordCount);
 
-        // Async Sleep Helper for Theater
         const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-        // Main Execution Logic
+        function closePaywall() {
+            document.body.classList.remove('lock-scroll');
+            blackoutPaywall.classList.remove('flex');
+            blackoutPaywall.classList.add('hidden');
+        }
+
         humanizeBtn.addEventListener('click', async () => {
             const text = inputText.value.trim();
             if (!text) return;
 
-            // UI Reset & Lock
             humanizeBtn.disabled = true;
             humanizeBtn.innerHTML = "EXECUTING...";
             copyBtn.classList.add('hidden');
+            analyticsBar.classList.add('hidden');
             outputText.innerHTML = "";
             
-            // Activate Execution Theater (Point 1)
             if(window.innerWidth < 768) {
-                // Auto-scroll on mobile for better UX
                 document.getElementById('outputContainer').scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
             
             executionTheater.classList.remove('hidden');
             executionTheater.classList.add('flex');
-            
-            // Reset Theater lines
-            [tl1, tl2, tl3, tl4, tl5].forEach(el => el.classList.add('hidden'));
+            tls.forEach(el => el.classList.add('hidden'));
 
-            // Run Theater & API Fetch concurrently
             const theaterPromise = async () => {
-                await sleep(400); tl1.classList.remove('hidden');
-                await sleep(600); tl2.classList.remove('hidden');
-                await sleep(700); tl3.classList.remove('hidden');
-                await sleep(800); tl4.classList.remove('hidden');
-                await sleep(1500); // Fake heavy computing time
-                tl5.classList.remove('hidden');
+                await sleep(400); tls[0].classList.remove('hidden');
+                await sleep(600); tls[1].classList.remove('hidden');
+                await sleep(700); tls[2].classList.remove('hidden');
+                await sleep(800); tls[3].classList.remove('hidden');
+                await sleep(1500); 
+                tls[4].classList.remove('hidden');
                 await sleep(500);
             };
 
@@ -399,35 +516,30 @@
             });
 
             try {
-                // Wait for both Theater to finish and API to return
                 const [, data] = await Promise.all([theaterPromise(), apiPromise]);
 
-                // Hide Theater
                 executionTheater.classList.remove('flex');
                 executionTheater.classList.add('hidden');
 
-                // Update Scarcity Meter (Point 3)
-                quotaMeter.innerHTML = "<i class='fa-solid fa-triangle-exclamation mr-1'></i> QUOTA EXHAUSTED (UPGRADE REQ)";
-                quotaMeter.classList.remove('text-emerald-400', 'border-emerald-400/20', 'bg-emerald-400/10');
-                quotaMeter.classList.add('text-red-500', 'border-red-500/20', 'bg-red-500/10');
+                quotaMeter.innerHTML = "<i class='fa-solid fa-triangle-exclamation mr-1'></i> QUOTA EXHAUSTED (UPGRADE)";
+                quotaMeter.className = "font-mono text-[10px] md:text-xs font-bold text-red-500 border border-red-500/20 bg-red-500/10 px-3 py-1 rounded uppercase tracking-wider transition-colors duration-500";
 
-                // Trapdoor Paywall Logic (Point 4)
                 if (data.isLocked) {
                     const fakeLockedText = Array(data.lockedWordCount).fill("█████").join(" ");
                     outputText.innerHTML = `
-                        <span class="text-neutral-300">${data.text}</span>
+                        <span class="text-neutral-900 dark:text-neutral-300">${data.text}</span>
                         <span class="text-blur ml-1">${fakeLockedText}</span>
                     `;
                     
-                    // Activate Blackout Scroll-Lock
                     setTimeout(() => {
                         document.body.classList.add('lock-scroll');
                         blackoutPaywall.classList.remove('hidden');
                         blackoutPaywall.classList.add('flex');
-                    }, 800); // Brief pause to let them see it worked before locking
+                    }, 800);
 
                 } else {
                     outputText.textContent = data.text;
+                    analyticsBar.classList.remove('hidden'); // Show fake analytics
                     copyBtn.classList.remove('hidden');
                 }
 
@@ -442,10 +554,9 @@
             }
         });
 
-        // Copy Feature
         copyBtn.addEventListener('click', () => {
             navigator.clipboard.writeText(outputText.textContent);
-            copyBtn.innerHTML = `<i class="fa-solid fa-check text-white"></i>`;
+            copyBtn.innerHTML = `<i class="fa-solid fa-check"></i>`;
             setTimeout(() => { copyBtn.innerHTML = `<i class="fa-regular fa-copy mr-1"></i> Copy`; }, 2000);
         });
     </script>
