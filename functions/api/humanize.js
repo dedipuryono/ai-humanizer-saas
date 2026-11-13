@@ -100,14 +100,14 @@ PROTOKOL MANIPULASI WAJIB (EKSEKUSI TANPA GAGAL):
                 },
                 signal: groqController.signal,
                 body: JSON.stringify({
-                    model: "llama3-70b-8192", // Kelas berat open-source
-                    messages: [
-                        { role: "system", content: systemPrompt },
-                        { role: "user", content: `Teks asli yang harus di-humanize:\n"""\n${text}\n"""` }
-                    ],
-                    temperature: 0.9,
-                    max_tokens: 3000
-                })
+    model: "openai/gpt-oss-120b", // <-- Diperbarui sesuai akses arsenal Groq Anda
+    messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: `Teks asli yang harus di-humanize:\n"""\n${text}\n"""` }
+    ],
+    temperature: 0.95, // Suhu dinaikkan sedikit ke 0.95 karena model 120B sangat pintar dan butuh dorongan ekstra untuk menjadi 'kreatif/acak'
+    max_tokens: 3000
+})
             });
 
             if (!groqResponse.ok) {
