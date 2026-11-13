@@ -104,18 +104,18 @@ FINAL INSTRUCTION: Analyze the jagged rhythm, blunt phrasing, and lack of roboti
         try {
             // ENGINE 1: GEMINI FLASH (Primary)
             const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+            // NAIKKAN TIMEOUT KE 15 DETIK: Memberikan napas bagi AI untuk menganalisis hologram manusia
             const geminiResponse = await fetch(geminiUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                signal: fetchTimeout(6000).signal,
+                signal: fetchTimeout(15000).signal,
                 body: JSON.stringify({
                     contents: [{ role: "user", parts: [{ text: `${systemPrompt}\n\nOriginal Text to Humanize:\n"""\n${processedInputText}\n"""` }] }],
-                    // Precision Parameters: Suhu kreatif terkendali & pemotongan probabilitas
                     generationConfig: { temperature: 0.85, topK: 40, topP: 0.80 }
                 })
             });
 
-            if (!geminiResponse.ok) throw new Error("Gemini Fallback Triggered");
+            if (!geminiResponse.ok) throw new Error("Gemini API Error or Timeout");
             const geminiData = await geminiResponse.json();
             
             if (!geminiData.candidates || geminiData.candidates.length === 0) throw new Error("Gemini empty response");
@@ -128,9 +128,10 @@ FINAL INSTRUCTION: Analyze the jagged rhythm, blunt phrasing, and lack of roboti
             const groqResponse = await fetch(groqUrl, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${GROQ_API_KEY}`, 'Content-Type': 'application/json' },
-                signal: fetchTimeout(4000).signal,
+                signal: fetchTimeout(10000).signal,
                 body: JSON.stringify({
-                    model: "openai/gpt-oss-120b", // Pastikan ID model Groq valid sesuai dokumentasi terbaru mereka
+                    // FIX: Gunakan nama model Groq asli yang sangat cepat dan pintar
+                    model: "llama3-70b-8192", 
                     messages: [
                         { role: "system", content: systemPrompt },
                         { role: "user", content: `Original Text to Humanize:\n"""\n${processedInputText}\n"""` }
@@ -147,7 +148,6 @@ FINAL INSTRUCTION: Analyze the jagged rhythm, blunt phrasing, and lack of roboti
         }
 
         // 4. MICRO-SANITIZER (Pembersihan Spasi Mutlak)
-        // Membunuh semua enter ganda, tab, dan spasi yang merusak UI
         humanizedText = humanizedText.replace(/\s+/g, ' ').trim();
 
         // 5. SECURE DELIVERY
