@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StealthCore AI | Elite Content Humanizer</title>
+    <meta name="description" content="StealthCore AI - The ultimate cognitive AI text humanizer. Bypass Turnitin, GPTZero, and Originality with military-grade obfuscation.">
+    <title>StealthCore AI | Enterprise AI Content Humanizer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
@@ -22,9 +23,10 @@
         .cyber-glow { box-shadow: 0 0 20px rgba(16, 185, 129, 0.2); }
         .cyber-glow:hover { box-shadow: 0 0 30px rgba(16, 185, 129, 0.4); }
         .fade-bottom { -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%); mask-image: linear-gradient(to bottom, black 50%, transparent 100%); }
-        /* Blinking cursor for typewriter */
         .cursor::after { content: '|'; animation: blink 1s step-end infinite; }
         @keyframes blink { 50% { opacity: 0; } }
+        /* Hide default details marker */
+        details > summary::-webkit-details-marker { display: none; }
     </style>
 </head>
 <body class="bg-cyber-900 text-slate-300 font-sans antialiased selection:bg-cyber-purple selection:text-white">
@@ -33,20 +35,20 @@
     <nav class="fixed w-full z-50 glass-panel border-b-0 border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0 flex items-center gap-2">
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
                     <i class="fa-solid fa-user-ninja text-cyber-green text-2xl"></i>
                     <span class="font-mono font-bold text-xl text-white tracking-tighter">STEALTH<span class="text-cyber-green">CORE</span></span>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#workspace" class="hover:text-cyber-green transition-colors">Workspace</a>
-                        <a href="#creators" class="hover:text-cyber-green transition-colors">Creators</a>
+                        <a href="#workspace" class="hover:text-cyber-green transition-colors font-semibold">Workspace</a>
+                        <a href="#creators" class="hover:text-cyber-green transition-colors font-semibold">Creators</a>
                         <a href="#pricing" class="hover:text-cyber-purple transition-colors font-semibold">Pricing</a>
-                        <a href="#contact" class="hover:text-cyber-green transition-colors">Contact</a>
+                        <a href="#faq" class="hover:text-cyber-green transition-colors font-semibold">FAQ</a>
                     </div>
                 </div>
                 <div>
-                    <a href="#workspace" class="bg-cyber-green text-slate-950 px-4 py-2 rounded font-mono font-bold text-sm hover:bg-emerald-400 transition-colors">INITIATE</a>
+                    <a href="#workspace" class="bg-cyber-green text-slate-950 px-5 py-2 rounded font-mono font-bold text-sm hover:bg-emerald-400 transition-colors shadow-lg">INITIATE</a>
                 </div>
             </div>
         </div>
@@ -55,226 +57,276 @@
     <!-- HERO & DUAL-PANE WORKSPACE -->
     <section id="workspace" class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-screen">
         <div class="text-center mb-12">
-            <h1 class="text-3xl md:text-5xl font-mono font-bold text-white mb-4 h-16">
+            <h1 class="text-2xl md:text-4xl lg:text-5xl font-mono font-bold text-white mb-4 h-20 md:h-16 flex items-center justify-center">
                 <span id="typewriter" class="text-cyber-green cursor"></span>
             </h1>
-            <p class="text-slate-400 max-w-2xl mx-auto">Disrupsi algoritma deteksi AI. Lewati Turnitin, GPTZero, dan Originality dengan mesin parafrase kognitif tingkat militer.</p>
+            <p class="text-slate-400 max-w-2xl mx-auto mt-4 text-lg">Disrupt detection algorithms. Bypass Turnitin, GPTZero, and Originality with military-grade cognitive paraphrasing.</p>
         </div>
 
         <!-- RADAR / STATUS BAR -->
-        <div class="flex justify-between items-center bg-slate-900 border border-slate-700 p-3 rounded-t-lg font-mono text-xs text-slate-400">
+        <div class="flex justify-between items-center bg-slate-900 border border-slate-700 p-3 rounded-t-lg font-mono text-xs text-slate-400 shadow-inner">
             <div class="flex items-center gap-3">
                 <span class="flex h-3 w-3 relative">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyber-green opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-3 w-3 bg-cyber-green"></span>
                 </span>
-                <span>Node: <span class="text-white">GPT-OSS-120B / Gemini-Flash</span></span>
+                <span class="hidden sm:inline">Active Node: <span class="text-white">GPT-OSS-120B / Gemini-Flash</span></span>
+                <span class="sm:hidden">Node: <span class="text-white">Auto</span></span>
             </div>
-            <div id="radar-status" class="text-cyber-green font-bold">READY TO BYPASS</div>
+            <div id="radar-status" class="text-cyber-green font-bold uppercase tracking-wider">READY TO BYPASS</div>
         </div>
 
         <!-- DUAL PANE EDITOR -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-1 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-1 mb-8 shadow-2xl">
             <!-- Input Panel -->
-            <div class="glass-panel p-4 rounded-bl-lg flex flex-col h-[500px]">
+            <div class="glass-panel p-5 flex flex-col h-[400px] md:h-[500px]">
                 <div class="flex justify-between items-center mb-3 border-b border-slate-700 pb-2">
-                    <span class="font-mono text-sm font-semibold text-white">INPUT Teks AI (Terdeteksi)</span>
-                    <span id="wordCount" class="text-xs text-slate-500">0 Kata</span>
+                    <span class="font-mono text-sm font-semibold text-white">INPUT (AI-Generated Text)</span>
+                    <span id="wordCount" class="text-xs text-slate-500 font-mono">0 Words</span>
                 </div>
-                <textarea id="inputText" class="w-full flex-grow bg-transparent text-slate-300 resize-none outline-none focus:ring-0 placeholder-slate-600 font-sans" placeholder="Tempelkan esai atau artikel hasil ChatGPT Anda di sini..."></textarea>
+                <textarea id="inputText" class="w-full flex-grow bg-transparent text-slate-300 resize-none outline-none focus:ring-0 placeholder-slate-600 font-sans text-base leading-relaxed" placeholder="Paste your ChatGPT, Claude, or Gemini generated text here..."></textarea>
             </div>
 
             <!-- Output Panel -->
-            <div class="glass-panel p-4 rounded-br-lg flex flex-col h-[500px] relative overflow-hidden" id="outputContainer">
+            <div class="glass-panel p-5 rounded-b-lg md:rounded-b-none md:rounded-br-lg flex flex-col h-[400px] md:h-[500px] relative overflow-hidden" id="outputContainer">
                 <div class="flex justify-between items-center mb-3 border-b border-slate-700 pb-2">
                     <span class="font-mono text-sm font-semibold text-cyber-green"><i class="fa-solid fa-check-double mr-1"></i> OUTPUT (100% Human)</span>
-                    <button id="copyBtn" class="text-xs text-slate-400 hover:text-white hidden"><i class="fa-regular fa-copy"></i> Salin</button>
+                    <button id="copyBtn" class="text-xs text-slate-400 hover:text-white hidden transition-colors font-mono"><i class="fa-regular fa-copy"></i> Copy</button>
                 </div>
                 
-                <div id="outputText" class="w-full flex-grow overflow-y-auto text-slate-300 font-sans whitespace-pre-wrap leading-relaxed">
-                    Menunggu input...
+                <div id="outputText" class="w-full flex-grow overflow-y-auto text-slate-300 font-sans text-base whitespace-pre-wrap leading-relaxed">
+                    Awaiting payload...
                 </div>
 
-                <!-- THE TRAPDOOR PAYWALL (Hidden by default) -->
-                <div id="paywallOverlay" class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/90 to-transparent hidden flex-col items-center justify-end pb-12 z-10">
-                    <div class="bg-cyber-900 border border-cyber-purple p-6 rounded-xl text-center shadow-[0_0_30px_rgba(139,92,246,0.2)] max-w-sm mx-auto">
-                        <i class="fa-solid fa-lock text-cyber-purple text-3xl mb-3"></i>
-                        <h3 class="text-white font-bold text-lg mb-2">Batas Teks Gratis Tercapai</h3>
-                        <p class="text-sm text-slate-400 mb-4">Sebagian teks Anda disembunyikan. Buka kunci sekarang untuk menyalin hasil bypass secara utuh.</p>
-                        <a href="#pricing" class="block w-full bg-cyber-purple text-white py-2 rounded font-bold hover:bg-violet-500 transition-colors shadow-lg">BUKA KUNCI TEKS</a>
+                <!-- THE TRAPDOOR PAYWALL -->
+                <div id="paywallOverlay" class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/95 to-slate-900/40 hidden flex-col items-center justify-end pb-12 z-10 px-4">
+                    <div class="bg-cyber-900 border border-cyber-purple p-6 rounded-xl text-center shadow-[0_0_40px_rgba(139,92,246,0.3)] w-full max-w-sm mx-auto transform transition-all translate-y-4 animate-[slideUp_0.5s_ease-out_forwards]">
+                        <i class="fa-solid fa-lock text-cyber-purple text-4xl mb-4"></i>
+                        <h3 class="text-white font-bold text-xl mb-2">Free Limit Reached</h3>
+                        <p class="text-sm text-slate-400 mb-6">Your text has been successfully humanized, but the remainder is hidden. Unlock now to copy the full result.</p>
+                        <a href="#pricing" class="block w-full bg-cyber-purple text-white py-3 rounded-lg font-bold hover:bg-violet-500 transition-colors shadow-lg">UNLOCK FULL TEXT</a>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="text-center">
-            <button id="humanizeBtn" class="bg-cyber-green text-slate-950 px-12 py-4 rounded-lg font-mono font-bold text-lg hover:bg-emerald-400 transition-all cyber-glow">
-                <i class="fa-solid fa-bolt mr-2"></i>HUMANIZE TEKS SEKARANG
+            <button id="humanizeBtn" class="bg-cyber-green text-slate-950 px-8 md:px-12 py-4 rounded-lg font-mono font-bold text-lg hover:bg-emerald-400 transition-all cyber-glow w-full md:w-auto shadow-xl">
+                <i class="fa-solid fa-bolt mr-2"></i>HUMANIZE TEXT NOW
             </button>
         </div>
     </section>
 
     <!-- BUILT FOR EVERY CREATOR -->
-    <section id="creators" class="py-20 bg-slate-900 border-t border-b border-slate-800">
+    <section id="creators" class="py-24 bg-slate-900 border-t border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-white mb-4">Dirancang Untuk Setiap <span class="text-cyber-green">Kreator</span></h2>
-                <p class="text-slate-400">Arsitektur kognitif yang beradaptasi dengan setiap gaya penulisan.</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Engineered For Every <span class="text-cyber-green">Creator</span></h2>
+                <p class="text-slate-400 text-lg">A cognitive architecture that adapts to any writing style and intent.</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Card 1 -->
-                <div class="glass-panel p-6 rounded-xl hover:-translate-y-2 transition-transform duration-300 hover:border-cyber-green/50">
-                    <div class="bg-slate-800 w-12 h-12 rounded flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-graduation-cap text-cyber-green text-xl"></i>
+                <div class="glass-panel p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 hover:border-cyber-green/50 hover:shadow-[0_10px_30px_rgba(16,185,129,0.1)] group">
+                    <div class="bg-slate-800/50 w-14 h-14 rounded-lg flex items-center justify-center mb-6 border border-slate-700 group-hover:border-cyber-green/50 transition-colors">
+                        <i class="fa-solid fa-graduation-cap text-cyber-green text-2xl"></i>
                     </div>
-                    <h3 class="text-white font-bold mb-2">Mahasiswa & Dosen</h3>
-                    <p class="text-sm text-slate-400">Bypass Turnitin untuk draf makalah, esai, dan laporan akademik tanpa merusak fakta dan format sitasi.</p>
+                    <h3 class="text-white font-bold text-lg mb-3">Students & Educators</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Bypass Turnitin for essays, research papers, and reports without compromising academic facts or citation integrity.</p>
                 </div>
                 <!-- Card 2 -->
-                <div class="glass-panel p-6 rounded-xl hover:-translate-y-2 transition-transform duration-300 hover:border-cyber-purple/50">
-                    <div class="bg-slate-800 w-12 h-12 rounded flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-pen-nib text-cyber-purple text-xl"></i>
+                <div class="glass-panel p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 hover:border-cyber-purple/50 hover:shadow-[0_10px_30px_rgba(139,92,246,0.1)] group">
+                    <div class="bg-slate-800/50 w-14 h-14 rounded-lg flex items-center justify-center mb-6 border border-slate-700 group-hover:border-cyber-purple/50 transition-colors">
+                        <i class="fa-solid fa-pen-nib text-cyber-purple text-2xl"></i>
                     </div>
-                    <h3 class="text-white font-bold mb-2">Penulis Konten (SEO)</h3>
-                    <p class="text-sm text-slate-400">Skala produksi artikel massal. Lolos dari Google HCU (Helpful Content Update) dengan ritme kalimat natural.</p>
+                    <h3 class="text-white font-bold text-lg mb-3">SEO Content Writers</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Scale mass article production. Evade Google's Helpful Content Update (HCU) penalties with natural syntax bursts.</p>
                 </div>
                 <!-- Card 3 -->
-                <div class="glass-panel p-6 rounded-xl hover:-translate-y-2 transition-transform duration-300 hover:border-blue-500/50">
-                    <div class="bg-slate-800 w-12 h-12 rounded flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-briefcase text-blue-500 text-xl"></i>
+                <div class="glass-panel p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 hover:border-blue-500/50 hover:shadow-[0_10px_30px_rgba(59,130,246,0.1)] group">
+                    <div class="bg-slate-800/50 w-14 h-14 rounded-lg flex items-center justify-center mb-6 border border-slate-700 group-hover:border-blue-500/50 transition-colors">
+                        <i class="fa-solid fa-briefcase text-blue-500 text-2xl"></i>
                     </div>
-                    <h3 class="text-white font-bold mb-2">Pemilik Bisnis</h3>
-                    <p class="text-sm text-slate-400">Buat copy marketing, email klien, dan proposal yang terdengar autentik, bukan seperti robot korporat.</p>
+                    <h3 class="text-white font-bold text-lg mb-3">Business Owners</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Craft marketing copy, client emails, and proposals that sound authentically human, not like a corporate robot.</p>
                 </div>
                 <!-- Card 4 -->
-                <div class="glass-panel p-6 rounded-xl hover:-translate-y-2 transition-transform duration-300 hover:border-orange-500/50">
-                    <div class="bg-slate-800 w-12 h-12 rounded flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-code text-orange-500 text-xl"></i>
+                <div class="glass-panel p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 hover:border-orange-500/50 hover:shadow-[0_10px_30px_rgba(249,115,22,0.1)] group">
+                    <div class="bg-slate-800/50 w-14 h-14 rounded-lg flex items-center justify-center mb-6 border border-slate-700 group-hover:border-orange-500/50 transition-colors">
+                        <i class="fa-solid fa-code text-orange-500 text-2xl"></i>
                     </div>
-                    <h3 class="text-white font-bold mb-2">Developer & Hacker</h3>
-                    <p class="text-sm text-slate-400">API terdedikasi untuk integrasi langsung ke *pipeline* sistem Anda. Eksekusi milidetik via LPU Edge.</p>
+                    <h3 class="text-white font-bold text-lg mb-3">Developers & Hackers</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Integrate directly into your automation pipelines via our dedicated API. Millisecond execution on LPU Edge nodes.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- PRICING / PANIC PASS -->
-    <section id="pricing" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="pricing" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-white mb-4">Investasi <span class="text-cyber-purple">Keamanan</span></h2>
-            <p class="text-slate-400">Bayar sebagian kecil dari biaya *drop-out* atau pinalti SEO Anda.</p>
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Security <span class="text-cyber-purple">Investment</span></h2>
+            <p class="text-slate-400 text-lg">Pay a fraction of the cost of a failed grade or an SEO penalty.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <!-- Student Pass -->
-            <div class="glass-panel p-8 rounded-2xl relative overflow-hidden border border-slate-700">
-                <div class="absolute top-0 right-0 bg-slate-700 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">SATU KALI BAYAR</div>
+            <div class="glass-panel p-8 md:p-10 rounded-2xl relative overflow-hidden border border-slate-700 flex flex-col">
+                <div class="absolute top-0 right-0 bg-slate-700 text-white text-[10px] uppercase tracking-wider font-bold px-4 py-1.5 rounded-bl-lg">ONE-TIME PAYMENT</div>
                 <h3 class="text-2xl font-bold text-white mb-2">Student Panic Pass</h3>
-                <p class="text-slate-400 text-sm mb-6">Tugas dikumpulkan besok pagi? Lolos malam ini juga.</p>
-                <div class="mb-6"><span class="text-5xl font-black text-white">$2.99</span><span class="text-slate-500"> / 3 Hari</span></div>
-                <ul class="space-y-3 mb-8 text-sm text-slate-300">
-                    <li><i class="fa-solid fa-check text-cyber-green mr-2"></i> Batas 20.000 kata</li>
-                    <li><i class="fa-solid fa-check text-cyber-green mr-2"></i> Lolos Turnitin 100%</li>
-                    <li><i class="fa-solid fa-check text-cyber-green mr-2"></i> Eksekusi Prioritas</li>
+                <p class="text-slate-400 text-sm mb-6 h-10">Assignment due tomorrow? Pass the detectors tonight.</p>
+                <div class="mb-8"><span class="text-6xl font-black text-white">$2.99</span><span class="text-slate-500 font-mono"> / 3 Days</span></div>
+                <ul class="space-y-4 mb-10 text-sm text-slate-300 flex-grow">
+                    <li class="flex items-start"><i class="fa-solid fa-check text-cyber-green mt-1 mr-3"></i> 20,000 words limit</li>
+                    <li class="flex items-start"><i class="fa-solid fa-check text-cyber-green mt-1 mr-3"></i> 100% Turnitin Bypass Guarantee</li>
+                    <li class="flex items-start"><i class="fa-solid fa-check text-cyber-green mt-1 mr-3"></i> Priority Node Execution</li>
                 </ul>
-                <a href="#" class="block w-full text-center border border-cyber-green text-cyber-green hover:bg-cyber-green hover:text-slate-950 py-3 rounded font-bold transition-colors">AMBIL AKSES 3 HARI</a>
+                <!-- Placeholder Link for Checkout -->
+                <a href="#" class="block w-full text-center border-2 border-cyber-green text-cyber-green hover:bg-cyber-green hover:text-slate-950 py-4 rounded-lg font-bold transition-colors">GET 3-DAY ACCESS</a>
             </div>
 
             <!-- Pro Monthly -->
-            <div class="bg-cyber-900 border-2 border-cyber-purple p-8 rounded-2xl relative shadow-[0_0_40px_rgba(139,92,246,0.15)] transform md:-translate-y-4">
-                <div class="absolute top-0 right-0 bg-cyber-purple text-white text-xs font-bold px-3 py-1 rounded-bl-lg">PALING POPULER</div>
+            <div class="bg-cyber-900 border-2 border-cyber-purple p-8 md:p-10 rounded-2xl relative shadow-[0_0_40px_rgba(139,92,246,0.15)] transform md:-translate-y-4 flex flex-col">
+                <div class="absolute top-0 right-0 bg-cyber-purple text-white text-[10px] uppercase tracking-wider font-bold px-4 py-1.5 rounded-bl-lg">MOST POPULAR</div>
                 <h3 class="text-2xl font-bold text-white mb-2">Stealth Pro</h3>
-                <p class="text-slate-400 text-sm mb-6">Untuk pembuat konten, blogger, dan profesional agensi.</p>
-                <div class="mb-6"><span class="text-5xl font-black text-white">$4.99</span><span class="text-slate-500"> / Bulan</span></div>
-                <ul class="space-y-3 mb-8 text-sm text-slate-300">
-                    <li><i class="fa-solid fa-check text-cyber-purple mr-2"></i> Batas 50.000 kata / bln</li>
-                    <li><i class="fa-solid fa-check text-cyber-purple mr-2"></i> Zero-Trust Data Deletion</li>
-                    <li><i class="fa-solid fa-check text-cyber-purple mr-2"></i> Akses API Backend</li>
-                    <li><i class="fa-solid fa-check text-cyber-purple mr-2"></i> Bebas Iklan & Watermark</li>
+                <p class="text-slate-400 text-sm mb-6 h-10">For heavy content creators, bloggers, and SEO agencies.</p>
+                <div class="mb-8"><span class="text-6xl font-black text-white">$4.99</span><span class="text-slate-500 font-mono"> / Month</span></div>
+                <ul class="space-y-4 mb-10 text-sm text-slate-300 flex-grow">
+                    <li class="flex items-start"><i class="fa-solid fa-check text-cyber-purple mt-1 mr-3"></i> 50,000 words limit / month</li>
+                    <li class="flex items-start"><i class="fa-solid fa-check text-cyber-purple mt-1 mr-3"></i> Zero-Trust Data Deletion</li>
+                    <li class="flex items-start"><i class="fa-solid fa-check text-cyber-purple mt-1 mr-3"></i> Backend API Access included</li>
+                    <li class="flex items-start"><i class="fa-solid fa-check text-cyber-purple mt-1 mr-3"></i> Ad-free & Watermark-free</li>
                 </ul>
-                <!-- TOMBOL LEMONSQUEEZY NANTI DIPASANG DI SINI -->
-                <a href="#" class="block w-full text-center bg-cyber-purple text-white hover:bg-violet-500 py-3 rounded font-bold transition-colors shadow-lg">BERLANGGANAN PRO</a>
+                <!-- LEMONSQUEEZY CHECKOUT LINK GOES HERE LATER -->
+                <a href="#" class="block w-full text-center bg-cyber-purple text-white hover:bg-violet-500 py-4 rounded-lg font-bold transition-colors shadow-lg">SUBSCRIBE TO PRO</a>
             </div>
         </div>
     </section>
 
-    <!-- CONTACT (TRANSMISSION) -->
-    <section id="contact" class="py-20 bg-slate-900 border-t border-slate-800">
+    <!-- INTEL BRIEFING (FAQ) -->
+    <section id="faq" class="py-20 bg-slate-900/50 border-t border-slate-800">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-10">
-                <h2 class="text-2xl font-bold text-white mb-2">Buka Jalur Komunikasi</h2>
-                <p class="text-slate-400">Butuh limit kustom Enterprise? Transmisikan pesan Anda.</p>
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">Intel <span class="text-cyber-green">Briefing</span></h2>
+                <p class="text-slate-400">Frequently asked questions regarding our stealth protocols.</p>
             </div>
-            <form class="glass-panel p-8 rounded-xl">
+            
+            <div class="space-y-4">
+                <details class="group glass-panel rounded-lg overflow-hidden">
+                    <summary class="font-bold cursor-pointer p-5 text-white flex justify-between items-center list-none hover:bg-slate-800/50 transition-colors">
+                        Is this really undetectable by Turnitin and GPTZero?
+                        <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-cyber-green"></i></span>
+                    </summary>
+                    <div class="text-slate-400 p-5 border-t border-slate-700/50 text-sm leading-relaxed bg-slate-800/20">
+                        Yes. While standard tools use basic synonym replacement (which detectors easily spot), our Cognitive Disruption Engine dismantles the predictive Markov chains and perplexity metrics that Turnitin, GPTZero, and Originality.ai rely on.
+                    </div>
+                </details>
+                <details class="group glass-panel rounded-lg overflow-hidden">
+                    <summary class="font-bold cursor-pointer p-5 text-white flex justify-between items-center list-none hover:bg-slate-800/50 transition-colors">
+                        Will it change the facts or meaning of my text?
+                        <summary style="display:none"></summary> <!-- Fallback for older Safari -->
+                        <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-cyber-green"></i></span>
+                    </summary>
+                    <div class="text-slate-400 p-5 border-t border-slate-700/50 text-sm leading-relaxed bg-slate-800/20">
+                        Absolutely not. Our dual-core LPU infrastructure is explicitly instructed to preserve all facts, numbers, quotes, and core semantics. It only manipulates the syntactic rhythm (burstiness) and vocabulary structure to mimic human imperfection.
+                    </div>
+                </details>
+                <details class="group glass-panel rounded-lg overflow-hidden">
+                    <summary class="font-bold cursor-pointer p-5 text-white flex justify-between items-center list-none hover:bg-slate-800/50 transition-colors">
+                        Are my submitted texts saved in your database?
+                        <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-cyber-green"></i></span>
+                    </summary>
+                    <div class="text-slate-400 p-5 border-t border-slate-700/50 text-sm leading-relaxed bg-slate-800/20">
+                        No. We operate on a strict Zero-Trust Data Policy. Your inputs and outputs are processed in volatile RAM at the Edge and are immediately wiped the moment the HTTP request completes. We do not store, log, or sell your data.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT (SECURE COMMS) -->
+    <section id="contact" class="py-24 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl font-bold text-white mb-2">Secure Comms Channel</h2>
+                <p class="text-slate-400">Need a custom Enterprise limit? Transmit your payload.</p>
+            </div>
+            <form class="glass-panel p-8 rounded-2xl">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
-                        <label class="block text-xs font-mono text-slate-400 mb-2">ID IDENTITAS (NAMA)</label>
-                        <input type="text" class="w-full bg-slate-800 border border-slate-700 rounded px-4 py-2 text-white focus:outline-none focus:border-cyber-green">
+                        <label class="block text-xs font-mono font-bold text-slate-400 mb-2 tracking-widest">IDENTITY ID</label>
+                        <input type="text" class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyber-green transition-colors" placeholder="Name or Alias">
                     </div>
                     <div>
-                        <label class="block text-xs font-mono text-slate-400 mb-2">NODE BALASAN (EMAIL)</label>
-                        <input type="email" class="w-full bg-slate-800 border border-slate-700 rounded px-4 py-2 text-white focus:outline-none focus:border-cyber-green">
+                        <label class="block text-xs font-mono font-bold text-slate-400 mb-2 tracking-widest">RETURN NODE</label>
+                        <input type="email" class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyber-green transition-colors" placeholder="Email Address">
                     </div>
                 </div>
-                <div class="mb-6">
-                    <label class="block text-xs font-mono text-slate-400 mb-2">PAYLOAD PESAN</label>
-                    <textarea rows="4" class="w-full bg-slate-800 border border-slate-700 rounded px-4 py-2 text-white focus:outline-none focus:border-cyber-green resize-none"></textarea>
+                <div class="mb-8">
+                    <label class="block text-xs font-mono font-bold text-slate-400 mb-2 tracking-widest">PAYLOAD</label>
+                    <textarea rows="4" class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyber-green resize-none transition-colors" placeholder="Enter your message..."></textarea>
                 </div>
-                <button type="button" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-mono font-bold py-3 rounded transition-colors">
-                    KIRIM TRANSMISI
+                <button type="button" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-mono font-bold py-4 rounded-lg transition-colors tracking-widest">
+                    TRANSMIT MESSAGE
                 </button>
             </form>
         </div>
     </section>
 
-    <!-- PENGESAHAN & FOOTER -->
-    <footer class="bg-cyber-950 pt-16 pb-8 border-t border-slate-800">
+    <!-- LEGAL & FOOTER -->
+    <footer class="bg-cyber-950 pt-20 pb-8 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-16">
                 <div class="col-span-1 md:col-span-2">
-                    <span class="font-mono font-bold text-xl text-white tracking-tighter mb-4 block">STEALTH<span class="text-cyber-green">CORE</span></span>
-                    <p class="text-slate-500 text-sm mb-6 max-w-md">Kami meyakini bahwa AI adalah ekstensi kecerdasan manusia, bukan pengganti. Alat ini dirancang untuk mempertahankan otentisitas penulisan Anda dari pendeteksi algoritmik yang cacat.</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-slate-500 hover:text-white"><i class="fa-brands fa-github text-xl"></i></a>
-                        <a href="#" class="text-slate-500 hover:text-white"><i class="fa-brands fa-x-twitter text-xl"></i></a>
+                    <span class="font-mono font-bold text-2xl text-white tracking-tighter mb-4 block">STEALTH<span class="text-cyber-green">CORE</span></span>
+                    <p class="text-slate-500 text-sm mb-6 max-w-md leading-relaxed">We believe AI is an extension of human intelligence, not a replacement. This tool is engineered to defend your writing authenticity from flawed algorithmic detectors.</p>
+                    <div class="flex space-x-5">
+                        <a href="#" class="text-slate-500 hover:text-white transition-colors"><i class="fa-brands fa-github text-xl"></i></a>
+                        <a href="#" class="text-slate-500 hover:text-white transition-colors"><i class="fa-brands fa-x-twitter text-xl"></i></a>
                     </div>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold mb-4">Pengesahan Legal</h4>
-                    <ul class="space-y-2 text-sm text-slate-500">
-                        <li><a href="#" class="hover:text-cyber-green">Kebijakan Privasi (Zero-Log)</a></li>
-                        <li><a href="#" class="hover:text-cyber-green">Syarat & Ketentuan Penggunaan</a></li>
-                        <li><a href="#" class="hover:text-cyber-green">Kebijakan Pengembalian Dana</a></li>
-                        <li><a href="#" class="hover:text-cyber-green">Pedoman Etika Akademik</a></li>
+                    <h4 class="text-white font-bold mb-5 tracking-wide">Legal Vault</h4>
+                    <ul class="space-y-3 text-sm text-slate-500">
+                        <li><a href="/privacy.html" class="hover:text-cyber-green transition-colors">Privacy Policy (Zero-Log)</a></li>
+                        <li><a href="/terms.html" class="hover:text-cyber-green transition-colors">Terms of Service</a></li>
+                        <li><a href="/refund.html" class="hover:text-cyber-green transition-colors">Refund Policy</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold mb-4">Status Sistem Live</h4>
-                    <ul class="space-y-3 text-sm font-mono">
-                        <li class="flex items-center text-slate-400"><i class="fa-solid fa-circle text-[8px] text-cyber-green mr-2"></i> Groq LPU: ONLINE</li>
-                        <li class="flex items-center text-slate-400"><i class="fa-solid fa-circle text-[8px] text-cyber-green mr-2"></i> Gemini Flash: STANDBY</li>
-                        <li class="flex items-center text-slate-400"><i class="fa-solid fa-circle text-[8px] text-cyber-green mr-2"></i> D1 Database: SYNCED</li>
+                    <h4 class="text-white font-bold mb-5 tracking-wide">Live System Status</h4>
+                    <ul class="space-y-4 text-sm font-mono bg-slate-900/50 p-4 rounded-lg border border-slate-800">
+                        <li class="flex items-center text-slate-400"><i class="fa-solid fa-circle text-[8px] text-cyber-green mr-3 animate-pulse"></i> Groq LPU: ONLINE</li>
+                        <li class="flex items-center text-slate-400"><i class="fa-solid fa-circle text-[8px] text-cyber-green mr-3"></i> Gemini Flash: STANDBY</li>
+                        <li class="flex items-center text-slate-400"><i class="fa-solid fa-circle text-[8px] text-cyber-green mr-3"></i> D1 Database: SYNCED</li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-slate-600 text-xs">© 2026 StealthCore AI Inc. Semua hak dilindungi undan-undang.</p>
-                <p class="text-slate-600 text-xs mt-2 md:mt-0 font-mono">Encrypted & Secured by Cloudflare</p>
+                <p class="text-slate-600 text-sm">© 2026 StealthCore AI Inc. All rights reserved.</p>
+                <p class="text-slate-600 text-xs mt-3 md:mt-0 font-mono tracking-widest uppercase">Encrypted & Secured by Cloudflare</p>
             </div>
         </div>
     </footer>
 
+    <style>
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+
     <!-- JAVASCRIPT LOGIC -->
     <script>
         // 1. Ghost Typing Effect
-        const textToType = "> Menginisiasi protokol bypass Turnitin... Selesai. Selamat datang di bayangan.";
+        const textToType = "> Executing neural bypass sequence... Standby. Welcome to the invisible web.";
         let i = 0;
         function typeWriter() {
-            if (i < textToType.length) {
-                document.getElementById("typewriter").innerHTML += textToType.charAt(i);
+            const el = document.getElementById("typewriter");
+            if (el && i < textToType.length) {
+                el.innerHTML += textToType.charAt(i);
                 i++;
-                setTimeout(typeWriter, 50);
+                setTimeout(typeWriter, 40);
             }
         }
         window.onload = typeWriter;
@@ -284,7 +336,7 @@
         const wordCount = document.getElementById('wordCount');
         inputText.addEventListener('input', () => {
             const words = inputText.value.trim().split(/\s+/).filter(word => word.length > 0).length;
-            wordCount.textContent = `${words} Kata`;
+            wordCount.textContent = `${words} Words`;
         });
 
         // 3. API Logic & The Trapdoor
@@ -297,22 +349,23 @@
         humanizeBtn.addEventListener('click', async () => {
             const text = inputText.value.trim();
             if (!text) {
-                alert("Masukkan teks terlebih dahulu!");
+                alert("Please paste some text first.");
                 return;
             }
 
-            // Animasi Proses
-            humanizeBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>MEMPROSES...`;
+            // Processing Animation
+            humanizeBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>PROCESSING...`;
             humanizeBtn.disabled = true;
-            radarStatus.className = "text-yellow-400 font-bold animate-pulse";
-            radarStatus.innerHTML = "<i class='fa-solid fa-radar mr-1'></i>EVADING DETECTORS...";
+            radarStatus.className = "text-yellow-400 font-bold animate-pulse uppercase tracking-wider";
+            radarStatus.innerHTML = "<i class='fa-solid fa-radar mr-2'></i>EVADING DETECTORS...";
             outputText.innerHTML = "";
             paywallOverlay.classList.add('hidden');
+            paywallOverlay.classList.remove('flex');
             outputText.classList.remove('fade-bottom');
             copyBtn.classList.add('hidden');
 
             try {
-                // Eksekusi API The Trapdoor (Menuju Worker Anda)
+                // Execute API Call to Cloudflare Worker
                 const response = await fetch('/api/humanize', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -322,9 +375,9 @@
                 if (!response.ok) throw new Error('API Error');
                 const data = await response.json(); 
 
-                // Logika Paywall Visual
+                // Trapdoor Paywall Logic
                 if (data.isLocked) {
-                    // Ciptakan teks palsu/blur untuk keamanan
+                    // Generate obfuscated text to prevent DOM scraping
                     const fakeLockedText = Array(data.lockedWordCount).fill("██████").join(" ");
                     outputText.innerHTML = `
                         <span class="text-slate-200">${data.text}</span>
@@ -335,31 +388,31 @@
                     setTimeout(() => {
                         paywallOverlay.classList.remove('hidden');
                         paywallOverlay.classList.add('flex');
-                    }, 1500); // Paywall muncul dramatis
+                    }, 1200); // Dramatic pause before paywall deployment
                 } else {
                     outputText.textContent = data.text;
-                    copyBtn.classList.remove('hidden'); // Tampilkan tombol copy jika gratis
+                    copyBtn.classList.remove('hidden'); 
                 }
 
-                radarStatus.className = "text-cyber-green font-bold";
-                radarStatus.innerHTML = "<i class='fa-solid fa-shield-check mr-1'></i>100% HUMAN / 0% AI";
+                radarStatus.className = "text-cyber-green font-bold uppercase tracking-wider";
+                radarStatus.innerHTML = "<i class='fa-solid fa-shield-check mr-2'></i>100% HUMAN / 0% AI";
 
             } catch (error) {
                 console.error(error);
-                radarStatus.className = "text-red-500 font-bold";
-                radarStatus.innerHTML = "KONEKSI GAGAL";
-                outputText.textContent = "Sistem sibuk. Silakan coba lagi.";
+                radarStatus.className = "text-red-500 font-bold uppercase tracking-wider";
+                radarStatus.innerHTML = "<i class='fa-solid fa-triangle-exclamation mr-2'></i>CONNECTION FAILED";
+                outputText.textContent = "System overloaded. Please try again in a moment.";
             } finally {
-                humanizeBtn.innerHTML = `<i class="fa-solid fa-bolt mr-2"></i>HUMANIZE TEKS SEKARANG`;
+                humanizeBtn.innerHTML = `<i class="fa-solid fa-bolt mr-2"></i>HUMANIZE TEXT NOW`;
                 humanizeBtn.disabled = false;
             }
         });
 
-        // 4. Tombol Salin
+        // 4. Copy to Clipboard
         copyBtn.addEventListener('click', () => {
             navigator.clipboard.writeText(outputText.textContent);
-            copyBtn.innerHTML = `<i class="fa-solid fa-check text-cyber-green"></i> Tersalin`;
-            setTimeout(() => { copyBtn.innerHTML = `<i class="fa-regular fa-copy"></i> Salin`; }, 2000);
+            copyBtn.innerHTML = `<i class="fa-solid fa-check text-cyber-green"></i> Copied`;
+            setTimeout(() => { copyBtn.innerHTML = `<i class="fa-regular fa-copy"></i> Copy`; }, 2000);
         });
     </script>
 </body>
