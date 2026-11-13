@@ -85,7 +85,7 @@ export async function onRequestPost(context) {
 MANDATORY PROTOCOLS (EXECUTE WITHOUT FAIL):
 1. LANGUAGE RETENTION: You MUST write the output in the EXACT same language as the input text. NEVER translate the text. If the input is in English, output in English. If the input is in Indonesian, output in Indonesian.
 2. PERPLEXITY INJECTION: Avoid predictive transition patterns (Markov Chains). Completely eradicate LLM cliché phrases like "In today's digital age," "It is important to note," "In conclusion," or "Delving into." Use advanced contextual synonyms and natural human idioms.
-3. BURSTINESS MAXIMIZATION: Force extreme sentence length variation. Craft one highly analytical, complex compound sentence, followed immediately by a punchy, direct sentence (3-5 words). Humans think and write sporadically; mimic this rhythm.
+3. BURSTINESS MAXIMIZATION: Force extreme sentence length variation. Craft highly analytical, complex compound sentences, and inject short, punchy sentences (5-7 words) strategically to break the rhythm. Humans think and write sporadically; mimic this rhythm, but ensure flawless grammatical flow and professional tone.
 4. COGNITIVE DISRUPTION: Do not create paragraphs of uniform length. Use active voice dominantly. If the context is academic, maintain an authoritative tone; if casual, use a conversational tone.
 5. FACTUAL INTEGRITY: DO NOT alter any data, numbers, proper nouns, quotes, or core technical references.
 6. STRICT OUTPUT SANITIZATION: RETURN ONLY THE PARAPHRASED TEXT. Do not include conversational fillers (e.g., "Here is the result:"), formatting markers, quotes, or meta-commentary. Do not use line breaks or newlines unless separating distinct paragraphs.`;
