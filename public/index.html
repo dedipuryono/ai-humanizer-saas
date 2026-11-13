@@ -114,8 +114,7 @@
                 return;
             }
 
-            // Animasi Loading
-            humanizeBtn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> MEMPROSES...`;
+            humanizeBtn.innerHTML = `MEMPROSES...`;
             humanizeBtn.disabled = true;
             statusBadge.className = "text-xs bg-yellow-900 text-yellow-400 px-2 py-1 rounded animate-pulse";
             statusBadge.textContent = "Bypassing AI...";
@@ -124,35 +123,34 @@
             outputText.classList.remove('fade-bottom');
 
             try {
-                // PANGGILAN API KE CLOUDFLARE WORKER
-                // Saat Anda sudah membuat worker, URL ini otomatis aktif
+                // Di masa depan, userTier akan diambil dari token sesi/login D1
+                const payload = { text: text, userTier: 'free' };
+
                 const response = await fetch('/api/humanize', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text: text })
+                    body: JSON.stringify(payload)
                 });
 
                 if (!response.ok) throw new Error('API Error');
-                const data = await response.json();
-                const resultWords = data.result.split(/\s+/);
+                const data = await response.json(); // Menerima data yang sudah diamankan server
 
-                // LOGIKA PAYWALL (Hanya di frontend untuk MVP, di produksi kunci sisa teks di backend)
-                if (resultWords.length > 150) {
-                    const freeText = resultWords.slice(0, 150).join(" ");
-                    const lockedText = resultWords.slice(150).join(" ");
+                if (data.isLocked) {
+                    // SERVER HANYA MENGIRIM 150 KATA. Kita buat teks palsu ("dummy") untuk diburamkan.
+                    // Ini mencegah peretas mencuri teks dari DOM Inspect Element.
+                    const fakeLockedText = Array(data.lockedWordCount).fill("██████").join(" ");
                     
                     outputText.innerHTML = `
-                        <span class="text-gray-200">${freeText}</span>
-                        <span class="text-gray-700 blur-[4px] select-none ml-1">${lockedText.substring(0, 200)}...</span>
+                        <span class="text-gray-200">${data.text}</span>
+                        <span class="text-gray-700 blur-[5px] select-none ml-1">${fakeLockedText}</span>
                     `;
                     outputText.classList.add('fade-bottom');
                     
-                    // Munculkan Paywall setelah 2 detik membaca
                     setTimeout(() => {
                         paywallOverlay.classList.remove('hidden');
                     }, 2000);
                 } else {
-                    outputText.textContent = data.result;
+                    outputText.textContent = data.text;
                 }
 
                 statusBadge.className = "text-xs bg-green-900 text-green-400 px-2 py-1 rounded shadow-[0_0_8px_#4ade80]";
@@ -161,9 +159,9 @@
                 console.error(error);
                 statusBadge.className = "text-xs bg-red-900 text-red-400 px-2 py-1 rounded";
                 statusBadge.textContent = "Error";
-                outputText.textContent = "Terjadi kesalahan sistem. Silakan coba lagi.";
+                outputText.textContent = "Sistem sibuk. Silakan coba lagi.";
             } finally {
-                humanizeBtn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> HUMANIZE TEKS`;
+                humanizeBtn.innerHTML = `HUMANIZE TEKS`;
                 humanizeBtn.disabled = false;
             }
         });
