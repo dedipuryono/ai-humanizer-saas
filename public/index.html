@@ -1,112 +1,299 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Humanizer Pro | Bypass AI Detection</title>
-    <!-- Tailwind CSS CDN -->
+    <title>StealthCore AI | Elite Content Humanizer</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        obsidian: '#0B0C10',
-                        darker: '#1F2833',
-                        neonBlue: '#66FCF1',
-                        neonCyan: '#45A29E',
-                    },
-                    boxShadow: {
-                        'neon': '0 0 10px rgba(102, 252, 241, 0.5)',
-                        'neon-strong': '0 0 20px rgba(102, 252, 241, 0.8)',
-                    }
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['Fira Code', 'monospace'] },
+                    colors: { cyber: { 900: '#0f172a', 800: '#1e293b', green: '#10b981', purple: '#8b5cf6' } }
                 }
             }
         }
     </script>
     <style>
-        /* Custom scrollbar untuk estetika */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0B0C10; }
-        ::-webkit-scrollbar-thumb { background: #45A29E; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #66FCF1; }
-        
-        .fade-bottom {
-            -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
-            mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
-        }
+        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }
+        .cyber-glow { box-shadow: 0 0 20px rgba(16, 185, 129, 0.2); }
+        .cyber-glow:hover { box-shadow: 0 0 30px rgba(16, 185, 129, 0.4); }
+        .fade-bottom { -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%); mask-image: linear-gradient(to bottom, black 50%, transparent 100%); }
+        /* Blinking cursor for typewriter */
+        .cursor::after { content: '|'; animation: blink 1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
     </style>
 </head>
-<body class="bg-obsidian text-gray-300 min-h-screen flex flex-col antialiased">
+<body class="bg-cyber-900 text-slate-300 font-sans antialiased selection:bg-cyber-purple selection:text-white">
 
-    <!-- Header -->
-    <header class="border-b border-darker p-4 flex justify-between items-center shadow-md">
-        <h1 class="text-2xl font-bold text-white tracking-widest">
-            AI <span class="text-neonBlue drop-shadow-[0_0_8px_#66FCF1]">HUMANIZER</span>
-        </h1>
-        <button id="loginBtn" class="text-sm text-neonCyan hover:text-neonBlue transition-colors">Client Login</button>
-    </header>
-
-    <!-- Main Workspace -->
-    <main class="flex-grow p-4 md:p-8 flex flex-col md:flex-row gap-6">
-        
-        <!-- Kolom Input (Kiri) -->
-        <div class="flex-1 flex flex-col bg-darker rounded-xl border border-gray-700 overflow-hidden shadow-lg transition-all focus-within:border-neonCyan focus-within:shadow-neon">
-            <div class="p-3 border-b border-gray-700 bg-black/20 flex justify-between items-center">
-                <span class="text-sm font-semibold text-gray-400">INPUT TEKS AI</span>
-                <span id="wordCount" class="text-xs text-neonCyan">0 Kata</span>
-            </div>
-            <textarea id="inputText" class="flex-grow w-full bg-transparent p-4 text-gray-200 resize-none outline-none" placeholder="Tempelkan teks hasil ChatGPT Anda di sini (Maksimal 1.000 kata)..."></textarea>
-        </div>
-
-        <!-- Kolom Output (Kanan) -->
-        <div class="flex-1 flex flex-col bg-darker rounded-xl border border-gray-700 overflow-hidden relative shadow-lg">
-            <div class="p-3 border-b border-gray-700 bg-black/20 flex justify-between items-center">
-                <span class="text-sm font-semibold text-gray-400">HASIL HUMANISASI</span>
-                <span id="statusBadge" class="text-xs bg-gray-800 text-gray-500 px-2 py-1 rounded">Menunggu</span>
-            </div>
-            
-            <div id="outputContainer" class="flex-grow w-full p-4 relative overflow-y-auto">
-                <!-- Teks hasil akan masuk ke sini -->
-                <p id="outputText" class="text-gray-200 leading-relaxed"></p>
-                
-                <!-- Overlay Paywall (Disembunyikan secara default) -->
-                <div id="paywallOverlay" class="hidden absolute inset-0 bg-obsidian/80 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center">
-                    <svg class="w-12 h-12 text-neonBlue mb-4 drop-shadow-[0_0_8px_#66FCF1]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                    <h3 class="text-xl font-bold text-white mb-2">Batas Teks Gratis Tercapai</h3>
-                    <p class="text-sm text-gray-400 mb-6">Anda telah melihat 150 kata pertama. Buka kunci sisa teks ini dan lolos 100% dari deteksi AI.</p>
-                    <a href="https://link-lemonsqueezy-anda.com/checkout" id="unlockBtn" class="bg-neonCyan hover:bg-neonBlue text-obsidian font-bold py-3 px-8 rounded-lg shadow-neon hover:shadow-neon-strong transition-all transform hover:scale-105">
-                        Unlock Full Text - $9.99
-                    </a>
+    <!-- NAVBAR -->
+    <nav class="fixed w-full z-50 glass-panel border-b-0 border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <i class="fa-solid fa-user-ninja text-cyber-green text-2xl"></i>
+                    <span class="font-mono font-bold text-xl text-white tracking-tighter">STEALTH<span class="text-cyber-green">CORE</span></span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#workspace" class="hover:text-cyber-green transition-colors">Workspace</a>
+                        <a href="#creators" class="hover:text-cyber-green transition-colors">Creators</a>
+                        <a href="#pricing" class="hover:text-cyber-purple transition-colors font-semibold">Pricing</a>
+                        <a href="#contact" class="hover:text-cyber-green transition-colors">Contact</a>
+                    </div>
+                </div>
+                <div>
+                    <a href="#workspace" class="bg-cyber-green text-slate-950 px-4 py-2 rounded font-mono font-bold text-sm hover:bg-emerald-400 transition-colors">INITIATE</a>
                 </div>
             </div>
         </div>
-    </main>
+    </nav>
 
-    <!-- Floating Action Button di Tengah -->
-    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-        <button id="humanizeBtn" class="bg-obsidian border-2 border-neonBlue text-neonBlue hover:bg-neonBlue hover:text-obsidian font-bold py-3 px-10 rounded-full shadow-neon hover:shadow-neon-strong transition-all flex items-center gap-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-            HUMANIZE TEKS
-        </button>
-    </div>
+    <!-- HERO & DUAL-PANE WORKSPACE -->
+    <section id="workspace" class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-screen">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl md:text-5xl font-mono font-bold text-white mb-4 h-16">
+                <span id="typewriter" class="text-cyber-green cursor"></span>
+            </h1>
+            <p class="text-slate-400 max-w-2xl mx-auto">Disrupsi algoritma deteksi AI. Lewati Turnitin, GPTZero, dan Originality dengan mesin parafrase kognitif tingkat militer.</p>
+        </div>
 
-    <!-- Frontend Logic -->
+        <!-- RADAR / STATUS BAR -->
+        <div class="flex justify-between items-center bg-slate-900 border border-slate-700 p-3 rounded-t-lg font-mono text-xs text-slate-400">
+            <div class="flex items-center gap-3">
+                <span class="flex h-3 w-3 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyber-green opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-cyber-green"></span>
+                </span>
+                <span>Node: <span class="text-white">GPT-OSS-120B / Gemini-Flash</span></span>
+            </div>
+            <div id="radar-status" class="text-cyber-green font-bold">READY TO BYPASS</div>
+        </div>
+
+        <!-- DUAL PANE EDITOR -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-1 mb-8">
+            <!-- Input Panel -->
+            <div class="glass-panel p-4 rounded-bl-lg flex flex-col h-[500px]">
+                <div class="flex justify-between items-center mb-3 border-b border-slate-700 pb-2">
+                    <span class="font-mono text-sm font-semibold text-white">INPUT Teks AI (Terdeteksi)</span>
+                    <span id="wordCount" class="text-xs text-slate-500">0 Kata</span>
+                </div>
+                <textarea id="inputText" class="w-full flex-grow bg-transparent text-slate-300 resize-none outline-none focus:ring-0 placeholder-slate-600 font-sans" placeholder="Tempelkan esai atau artikel hasil ChatGPT Anda di sini..."></textarea>
+            </div>
+
+            <!-- Output Panel -->
+            <div class="glass-panel p-4 rounded-br-lg flex flex-col h-[500px] relative overflow-hidden" id="outputContainer">
+                <div class="flex justify-between items-center mb-3 border-b border-slate-700 pb-2">
+                    <span class="font-mono text-sm font-semibold text-cyber-green"><i class="fa-solid fa-check-double mr-1"></i> OUTPUT (100% Human)</span>
+                    <button id="copyBtn" class="text-xs text-slate-400 hover:text-white hidden"><i class="fa-regular fa-copy"></i> Salin</button>
+                </div>
+                
+                <div id="outputText" class="w-full flex-grow overflow-y-auto text-slate-300 font-sans whitespace-pre-wrap leading-relaxed">
+                    Menunggu input...
+                </div>
+
+                <!-- THE TRAPDOOR PAYWALL (Hidden by default) -->
+                <div id="paywallOverlay" class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/90 to-transparent hidden flex-col items-center justify-end pb-12 z-10">
+                    <div class="bg-cyber-900 border border-cyber-purple p-6 rounded-xl text-center shadow-[0_0_30px_rgba(139,92,246,0.2)] max-w-sm mx-auto">
+                        <i class="fa-solid fa-lock text-cyber-purple text-3xl mb-3"></i>
+                        <h3 class="text-white font-bold text-lg mb-2">Batas Teks Gratis Tercapai</h3>
+                        <p class="text-sm text-slate-400 mb-4">Sebagian teks Anda disembunyikan. Buka kunci sekarang untuk menyalin hasil bypass secara utuh.</p>
+                        <a href="#pricing" class="block w-full bg-cyber-purple text-white py-2 rounded font-bold hover:bg-violet-500 transition-colors shadow-lg">BUKA KUNCI TEKS</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button id="humanizeBtn" class="bg-cyber-green text-slate-950 px-12 py-4 rounded-lg font-mono font-bold text-lg hover:bg-emerald-400 transition-all cyber-glow">
+                <i class="fa-solid fa-bolt mr-2"></i>HUMANIZE TEKS SEKARANG
+            </button>
+        </div>
+    </section>
+
+    <!-- BUILT FOR EVERY CREATOR -->
+    <section id="creators" class="py-20 bg-slate-900 border-t border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white mb-4">Dirancang Untuk Setiap <span class="text-cyber-green">Kreator</span></h2>
+                <p class="text-slate-400">Arsitektur kognitif yang beradaptasi dengan setiap gaya penulisan.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <div class="glass-panel p-6 rounded-xl hover:-translate-y-2 transition-transform duration-300 hover:border-cyber-green/50">
+                    <div class="bg-slate-800 w-12 h-12 rounded flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-graduation-cap text-cyber-green text-xl"></i>
+                    </div>
+                    <h3 class="text-white font-bold mb-2">Mahasiswa & Dosen</h3>
+                    <p class="text-sm text-slate-400">Bypass Turnitin untuk draf makalah, esai, dan laporan akademik tanpa merusak fakta dan format sitasi.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="glass-panel p-6 rounded-xl hover:-translate-y-2 transition-transform duration-300 hover:border-cyber-purple/50">
+                    <div class="bg-slate-800 w-12 h-12 rounded flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-pen-nib text-cyber-purple text-xl"></i>
+                    </div>
+                    <h3 class="text-white font-bold mb-2">Penulis Konten (SEO)</h3>
+                    <p class="text-sm text-slate-400">Skala produksi artikel massal. Lolos dari Google HCU (Helpful Content Update) dengan ritme kalimat natural.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="glass-panel p-6 rounded-xl hover:-translate-y-2 transition-transform duration-300 hover:border-blue-500/50">
+                    <div class="bg-slate-800 w-12 h-12 rounded flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-briefcase text-blue-500 text-xl"></i>
+                    </div>
+                    <h3 class="text-white font-bold mb-2">Pemilik Bisnis</h3>
+                    <p class="text-sm text-slate-400">Buat copy marketing, email klien, dan proposal yang terdengar autentik, bukan seperti robot korporat.</p>
+                </div>
+                <!-- Card 4 -->
+                <div class="glass-panel p-6 rounded-xl hover:-translate-y-2 transition-transform duration-300 hover:border-orange-500/50">
+                    <div class="bg-slate-800 w-12 h-12 rounded flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-code text-orange-500 text-xl"></i>
+                    </div>
+                    <h3 class="text-white font-bold mb-2">Developer & Hacker</h3>
+                    <p class="text-sm text-slate-400">API terdedikasi untuk integrasi langsung ke *pipeline* sistem Anda. Eksekusi milidetik via LPU Edge.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING / PANIC PASS -->
+    <section id="pricing" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-white mb-4">Investasi <span class="text-cyber-purple">Keamanan</span></h2>
+            <p class="text-slate-400">Bayar sebagian kecil dari biaya *drop-out* atau pinalti SEO Anda.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <!-- Student Pass -->
+            <div class="glass-panel p-8 rounded-2xl relative overflow-hidden border border-slate-700">
+                <div class="absolute top-0 right-0 bg-slate-700 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">SATU KALI BAYAR</div>
+                <h3 class="text-2xl font-bold text-white mb-2">Student Panic Pass</h3>
+                <p class="text-slate-400 text-sm mb-6">Tugas dikumpulkan besok pagi? Lolos malam ini juga.</p>
+                <div class="mb-6"><span class="text-5xl font-black text-white">$2.99</span><span class="text-slate-500"> / 3 Hari</span></div>
+                <ul class="space-y-3 mb-8 text-sm text-slate-300">
+                    <li><i class="fa-solid fa-check text-cyber-green mr-2"></i> Batas 20.000 kata</li>
+                    <li><i class="fa-solid fa-check text-cyber-green mr-2"></i> Lolos Turnitin 100%</li>
+                    <li><i class="fa-solid fa-check text-cyber-green mr-2"></i> Eksekusi Prioritas</li>
+                </ul>
+                <a href="#" class="block w-full text-center border border-cyber-green text-cyber-green hover:bg-cyber-green hover:text-slate-950 py-3 rounded font-bold transition-colors">AMBIL AKSES 3 HARI</a>
+            </div>
+
+            <!-- Pro Monthly -->
+            <div class="bg-cyber-900 border-2 border-cyber-purple p-8 rounded-2xl relative shadow-[0_0_40px_rgba(139,92,246,0.15)] transform md:-translate-y-4">
+                <div class="absolute top-0 right-0 bg-cyber-purple text-white text-xs font-bold px-3 py-1 rounded-bl-lg">PALING POPULER</div>
+                <h3 class="text-2xl font-bold text-white mb-2">Stealth Pro</h3>
+                <p class="text-slate-400 text-sm mb-6">Untuk pembuat konten, blogger, dan profesional agensi.</p>
+                <div class="mb-6"><span class="text-5xl font-black text-white">$4.99</span><span class="text-slate-500"> / Bulan</span></div>
+                <ul class="space-y-3 mb-8 text-sm text-slate-300">
+                    <li><i class="fa-solid fa-check text-cyber-purple mr-2"></i> Batas 50.000 kata / bln</li>
+                    <li><i class="fa-solid fa-check text-cyber-purple mr-2"></i> Zero-Trust Data Deletion</li>
+                    <li><i class="fa-solid fa-check text-cyber-purple mr-2"></i> Akses API Backend</li>
+                    <li><i class="fa-solid fa-check text-cyber-purple mr-2"></i> Bebas Iklan & Watermark</li>
+                </ul>
+                <!-- TOMBOL LEMONSQUEEZY NANTI DIPASANG DI SINI -->
+                <a href="#" class="block w-full text-center bg-cyber-purple text-white hover:bg-violet-500 py-3 rounded font-bold transition-colors shadow-lg">BERLANGGANAN PRO</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT (TRANSMISSION) -->
+    <section id="contact" class="py-20 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl font-bold text-white mb-2">Buka Jalur Komunikasi</h2>
+                <p class="text-slate-400">Butuh limit kustom Enterprise? Transmisikan pesan Anda.</p>
+            </div>
+            <form class="glass-panel p-8 rounded-xl">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-xs font-mono text-slate-400 mb-2">ID IDENTITAS (NAMA)</label>
+                        <input type="text" class="w-full bg-slate-800 border border-slate-700 rounded px-4 py-2 text-white focus:outline-none focus:border-cyber-green">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-mono text-slate-400 mb-2">NODE BALASAN (EMAIL)</label>
+                        <input type="email" class="w-full bg-slate-800 border border-slate-700 rounded px-4 py-2 text-white focus:outline-none focus:border-cyber-green">
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-xs font-mono text-slate-400 mb-2">PAYLOAD PESAN</label>
+                    <textarea rows="4" class="w-full bg-slate-800 border border-slate-700 rounded px-4 py-2 text-white focus:outline-none focus:border-cyber-green resize-none"></textarea>
+                </div>
+                <button type="button" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-mono font-bold py-3 rounded transition-colors">
+                    KIRIM TRANSMISI
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- PENGESAHAN & FOOTER -->
+    <footer class="bg-cyber-950 pt-16 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <span class="font-mono font-bold text-xl text-white tracking-tighter mb-4 block">STEALTH<span class="text-cyber-green">CORE</span></span>
+                    <p class="text-slate-500 text-sm mb-6 max-w-md">Kami meyakini bahwa AI adalah ekstensi kecerdasan manusia, bukan pengganti. Alat ini dirancang untuk mempertahankan otentisitas penulisan Anda dari pendeteksi algoritmik yang cacat.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-slate-500 hover:text-white"><i class="fa-brands fa-github text-xl"></i></a>
+                        <a href="#" class="text-slate-500 hover:text-white"><i class="fa-brands fa-x-twitter text-xl"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Pengesahan Legal</h4>
+                    <ul class="space-y-2 text-sm text-slate-500">
+                        <li><a href="#" class="hover:text-cyber-green">Kebijakan Privasi (Zero-Log)</a></li>
+                        <li><a href="#" class="hover:text-cyber-green">Syarat & Ketentuan Penggunaan</a></li>
+                        <li><a href="#" class="hover:text-cyber-green">Kebijakan Pengembalian Dana</a></li>
+                        <li><a href="#" class="hover:text-cyber-green">Pedoman Etika Akademik</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Status Sistem Live</h4>
+                    <ul class="space-y-3 text-sm font-mono">
+                        <li class="flex items-center text-slate-400"><i class="fa-solid fa-circle text-[8px] text-cyber-green mr-2"></i> Groq LPU: ONLINE</li>
+                        <li class="flex items-center text-slate-400"><i class="fa-solid fa-circle text-[8px] text-cyber-green mr-2"></i> Gemini Flash: STANDBY</li>
+                        <li class="flex items-center text-slate-400"><i class="fa-solid fa-circle text-[8px] text-cyber-green mr-2"></i> D1 Database: SYNCED</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-slate-600 text-xs">© 2026 StealthCore AI Inc. Semua hak dilindungi undan-undang.</p>
+                <p class="text-slate-600 text-xs mt-2 md:mt-0 font-mono">Encrypted & Secured by Cloudflare</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
     <script>
+        // 1. Ghost Typing Effect
+        const textToType = "> Menginisiasi protokol bypass Turnitin... Selesai. Selamat datang di bayangan.";
+        let i = 0;
+        function typeWriter() {
+            if (i < textToType.length) {
+                document.getElementById("typewriter").innerHTML += textToType.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+        window.onload = typeWriter;
+
+        // 2. Word Counter
         const inputText = document.getElementById('inputText');
         const wordCount = document.getElementById('wordCount');
-        const humanizeBtn = document.getElementById('humanizeBtn');
-        const outputText = document.getElementById('outputText');
-        const statusBadge = document.getElementById('statusBadge');
-        const paywallOverlay = document.getElementById('paywallOverlay');
-
-        // Menghitung kata secara real-time
         inputText.addEventListener('input', () => {
-            const words = inputText.value.trim().split(/\s+/).filter(w => w.length > 0);
-            wordCount.textContent = `${words.length} Kata`;
+            const words = inputText.value.trim().split(/\s+/).filter(word => word.length > 0).length;
+            wordCount.textContent = `${words} Kata`;
         });
 
-        // Simulasi Eksekusi API
+        // 3. API Logic & The Trapdoor
+        const humanizeBtn = document.getElementById('humanizeBtn');
+        const outputText = document.getElementById('outputText');
+        const paywallOverlay = document.getElementById('paywallOverlay');
+        const radarStatus = document.getElementById('radar-status');
+        const copyBtn = document.getElementById('copyBtn');
+
         humanizeBtn.addEventListener('click', async () => {
             const text = inputText.value.trim();
             if (!text) {
@@ -114,58 +301,66 @@
                 return;
             }
 
-            humanizeBtn.innerHTML = `MEMPROSES...`;
+            // Animasi Proses
+            humanizeBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>MEMPROSES...`;
             humanizeBtn.disabled = true;
-            statusBadge.className = "text-xs bg-yellow-900 text-yellow-400 px-2 py-1 rounded animate-pulse";
-            statusBadge.textContent = "Bypassing AI...";
+            radarStatus.className = "text-yellow-400 font-bold animate-pulse";
+            radarStatus.innerHTML = "<i class='fa-solid fa-radar mr-1'></i>EVADING DETECTORS...";
             outputText.innerHTML = "";
             paywallOverlay.classList.add('hidden');
             outputText.classList.remove('fade-bottom');
+            copyBtn.classList.add('hidden');
 
             try {
-                // Di masa depan, userTier akan diambil dari token sesi/login D1
-                const payload = { text: text, userTier: 'free' };
-
+                // Eksekusi API The Trapdoor (Menuju Worker Anda)
                 const response = await fetch('/api/humanize', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({ text: text })
                 });
 
                 if (!response.ok) throw new Error('API Error');
-                const data = await response.json(); // Menerima data yang sudah diamankan server
+                const data = await response.json(); 
 
+                // Logika Paywall Visual
                 if (data.isLocked) {
-                    // SERVER HANYA MENGIRIM 150 KATA. Kita buat teks palsu ("dummy") untuk diburamkan.
-                    // Ini mencegah peretas mencuri teks dari DOM Inspect Element.
+                    // Ciptakan teks palsu/blur untuk keamanan
                     const fakeLockedText = Array(data.lockedWordCount).fill("██████").join(" ");
-                    
                     outputText.innerHTML = `
-                        <span class="text-gray-200">${data.text}</span>
-                        <span class="text-gray-700 blur-[5px] select-none ml-1">${fakeLockedText}</span>
+                        <span class="text-slate-200">${data.text}</span>
+                        <span class="text-slate-800 blur-[6px] select-none ml-1">${fakeLockedText}</span>
                     `;
                     outputText.classList.add('fade-bottom');
                     
                     setTimeout(() => {
                         paywallOverlay.classList.remove('hidden');
-                    }, 2000);
+                        paywallOverlay.classList.add('flex');
+                    }, 1500); // Paywall muncul dramatis
                 } else {
                     outputText.textContent = data.text;
+                    copyBtn.classList.remove('hidden'); // Tampilkan tombol copy jika gratis
                 }
 
-                statusBadge.className = "text-xs bg-green-900 text-green-400 px-2 py-1 rounded shadow-[0_0_8px_#4ade80]";
-                statusBadge.textContent = "100% Human Score";
+                radarStatus.className = "text-cyber-green font-bold";
+                radarStatus.innerHTML = "<i class='fa-solid fa-shield-check mr-1'></i>100% HUMAN / 0% AI";
+
             } catch (error) {
                 console.error(error);
-                statusBadge.className = "text-xs bg-red-900 text-red-400 px-2 py-1 rounded";
-                statusBadge.textContent = "Error";
+                radarStatus.className = "text-red-500 font-bold";
+                radarStatus.innerHTML = "KONEKSI GAGAL";
                 outputText.textContent = "Sistem sibuk. Silakan coba lagi.";
             } finally {
-                humanizeBtn.innerHTML = `HUMANIZE TEKS`;
+                humanizeBtn.innerHTML = `<i class="fa-solid fa-bolt mr-2"></i>HUMANIZE TEKS SEKARANG`;
                 humanizeBtn.disabled = false;
             }
+        });
+
+        // 4. Tombol Salin
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(outputText.textContent);
+            copyBtn.innerHTML = `<i class="fa-solid fa-check text-cyber-green"></i> Tersalin`;
+            setTimeout(() => { copyBtn.innerHTML = `<i class="fa-regular fa-copy"></i> Salin`; }, 2000);
         });
     </script>
 </body>
 </html>
- 
