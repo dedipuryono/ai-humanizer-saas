@@ -1,16 +1,16 @@
 /**
- * COGNITIVE AI HUMANIZER - ENTERPRISE EDGE API v5.0 (GLOBAL)
+ * STEALTHCORE AI - HOLOGRAPHIC FEW-SHOT ENGINE v6.0 (APEX FORM)
  * Features: D1 SQL IP Tracking, Smart Payload Truncation, The Trapdoor Paywall
  * Engine: Dual-Core Failover (Gemini 1.5 Flash -> GPT-OSS-120B)
- * Intelligence: Global English Prompt, Strict Language Retention, Auto-Whitespace Sanitizer
+ * Intelligence: Holographic Entropy Injection, Vocabulary Blacklist, Strict Constraint Locks
  */
 
 export async function onRequestPost(context) {
     try {
         const request = context.request;
-        const DB = context.env.DB; // Binding to stealth_core_db
+        const DB = context.env.DB; // Binding ke stealth_core_db
         
-        // 1. FINGERPRINTING & IDENTIFICATION
+        // 1. FINGERPRINTING & IDENTIFIKASI
         const clientIP = request.headers.get('CF-Connecting-IP') || '127.0.0.1';
         const userAgent = request.headers.get('User-Agent') || 'unknown';
         
@@ -22,14 +22,14 @@ export async function onRequestPost(context) {
         const { text } = await request.json();
 
         if (!text || typeof text !== 'string' || text.trim().length === 0 || text.length > 10000) {
-            return new Response(JSON.stringify({ error: "Invalid payload or exceeds maximum limit (10,000 chars)." }), { status: 400 });
+            return new Response(JSON.stringify({ error: "Invalid payload or exceeds maximum limit." }), { status: 400 });
         }
 
         // 2. D1 DATABASE CHECK (The Trapdoor Logic)
         let isPro = false;
         let isLocked = false;
         
-        // SANITIZATION PRE-PROCESS: Clean input whitespace before processing
+        // PRA-PEMROSESAN: Pembersihan spasi putih ekstrem
         const cleanInputText = text.replace(/\s+/g, ' ').trim();
         let wordsArr = cleanInputText.split(' ');
         let lockedWordCount = 0;
@@ -38,27 +38,27 @@ export async function onRequestPost(context) {
             const { results } = await DB.prepare(`SELECT * FROM ip_tracking WHERE ip_address = ?`).bind(clientIP).all();
             
             if (results.length === 0) {
-                // NEW USER: Grant 1x full free access
+                // PENGGUNA BARU: Berikan 1x akses penuh gratis
                 await DB.prepare(
                     `INSERT INTO ip_tracking (ip_address, free_uses_left, is_pro) VALUES (?, 0, 0)`
                 ).bind(clientIP).run();
                 isLocked = false; 
             } else {
-                // RETURNING USER
+                // PENGGUNA LAMA
                 const user = results[0];
                 if (user.is_pro === 1) {
                     isPro = true;
                     isLocked = false;
                 } else if (user.free_uses_left > 0) {
-                    // Still has free quota (for future multi-free-tier features)
+                    // Masih punya kuota gratis
                     await DB.prepare(`UPDATE ip_tracking SET free_uses_left = free_uses_left - 1, total_requests = total_requests + 1 WHERE ip_address = ?`).bind(clientIP).run();
                     isLocked = false;
                 } else {
-                    // QUOTA EXHAUSTED -> ACTIVATE PAYWALL & SAVE TOKENS
+                    // KUOTA EXHAUSTED -> AKTIFKAN BLACKOUT PAYWALL
                     isLocked = true;
                     lockedWordCount = wordsArr.length > 150 ? wordsArr.length - 150 : 0;
                     
-                    // Smart Truncation: Only send the first 150 words to the AI to save compute costs
+                    // Smart Truncation: Potong input HANYA 150 kata untuk menghemat biaya API
                     if (wordsArr.length > 150) {
                         wordsArr = wordsArr.slice(0, 150);
                     }
@@ -67,7 +67,7 @@ export async function onRequestPost(context) {
             }
         } catch (dbError) {
             console.error("D1 Database Error:", dbError);
-            // Fall-open on DB failure: Lock the user to prevent financial bleed
+            // Fall-open: Kunci pengguna agar sistem tidak rugi jika DB error
             isLocked = true;
             lockedWordCount = wordsArr.length > 150 ? wordsArr.length - 150 : 0;
             if (wordsArr.length > 150) wordsArr = wordsArr.slice(0, 150);
@@ -75,20 +75,25 @@ export async function onRequestPost(context) {
 
         const processedInputText = wordsArr.join(" "); 
         
-        // 3. DUAL-CORE AI FAILOVER & GLOBAL ENTERPRISE PROMPT
+        // 3. THE HOLOGRAPHIC FEW-SHOT ENGINE (Inti Kesempurnaan)
         const GEMINI_API_KEY = context.env.GEMINI_API_KEY;
         const GROQ_API_KEY = context.env.GROQ_API_KEY;
 
-        // Enterprise English Prompt: Ensures global language retention and zero AI footprint
-       const systemPrompt = `You are an expert human ghostwriter and subject matter expert. Your absolute primary task is to rewrite the provided text so it bypasses all AI detectors (like Turnitin, GPTZero, Undetectable.ai) by mimicking true human writing psychology.
+        const systemPrompt = `You are an elite ghostwriter. Your singular task is to rewrite the input text so it scores 0% on all AI detectors, while maintaining the exact original meaning and professional tone.
 
-CRITICAL HEURISTICS TO BYPASS AI DETECTION (FOLLOW STRICTLY):
-1. AVOID THE "THESAURUS TRAP": Do NOT just replace words with overly complex or poetic synonyms. Completely ban flowery AI words like "amidst," "relentless," "tapestry," "delving," "foster," "beacon," or "sustainable progress." Use strong, everyday professional vocabulary.
-2. EXTREME STRUCTURAL ASYMMETRY (BURSTINESS): AI writes in balanced, predictable sentence lengths. You MUST break this. Write one long, flowing sentence containing multiple clauses. Then, follow it immediately with a blunt, 3-to-5 word sentence. Use dashes (—) to interrupt your own thoughts naturally.
-3. KILL AI TRANSITIONS: Never start sentences or paragraphs with "Consequently," "In conclusion," "Furthermore," "Moreover," "Ultimately," or "To thrive." Start sentences directly with the core subject or a direct action.
-4. CONTROLLED IMPERFECTION: Human writing is slightly conversational, even in business or academic contexts. Let the text breathe. Do not try to sound like a perfect academic robot.
-5. ZERO META-TEXT & LANGUAGE LOCK: Output the EXACT same language as the input. Return ONLY the finalized text. No introductions, no quotes, no formatting.`;
-        
+THE 3 LAWS OF PHYSICS (MANDATORY):
+1. THE CONSTRAINT LOCK: Your output word count MUST be within +/- 5% of the original. You MUST output in the EXACT same language as the input text. Never translate.
+2. THE BLACKLIST: You are STRICTLY FORBIDDEN from using any of these AI cliché words or phrases: delve, tapestry, realm, foster, crucial, dynamic, landscape, amidst, relentless, beacon, testament, intricate, pivotal, overarching, paradigm, navigate, multifaceted, underscore, leverage, encapsulate, in conclusion, it is important to note.
+3. HOLOGRAPHIC ENTROPY INJECTION: AI writes in balanced, predictable sentence lengths. Humans write asymmetrically. You must mimic true human burstiness.
+
+HUMAN REFERENCE 1 (Analytical):
+"The data shows a clear trend. While initial adoption was slow—largely due to interface friction—Q3 metrics indicate a 40% surge in daily active users. We missed the early signs. Moving forward, the focus shifts entirely to retention strategies."
+
+HUMAN REFERENCE 2 (Narrative):
+"It happens every time. A new framework drops, developers rush to rewrite their stack, and six months later they realize the legacy code was perfectly fine. The churn is exhausting. But occasionally, a tool comes along that actually justifies the hype."
+
+FINAL INSTRUCTION: Analyze the jagged rhythm, blunt phrasing, and lack of robotic transitions in the Human References above. Apply this exact mathematical entropy to the user's input text. Return ONLY the rewritten text. No introductions, no formatting, no markdown.`;
+
         let humanizedText = "";
         const fetchTimeout = (ms) => {
             const controller = new AbortController();
@@ -102,10 +107,11 @@ CRITICAL HEURISTICS TO BYPASS AI DETECTION (FOLLOW STRICTLY):
             const geminiResponse = await fetch(geminiUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                signal: fetchTimeout(8000).signal,
+                signal: fetchTimeout(6000).signal,
                 body: JSON.stringify({
                     contents: [{ role: "user", parts: [{ text: `${systemPrompt}\n\nOriginal Text to Humanize:\n"""\n${processedInputText}\n"""` }] }],
-                    generationConfig: { temperature: 0.9, topK: 45, topP: 0.95 }
+                    // Precision Parameters: Suhu kreatif terkendali & pemotongan probabilitas
+                    generationConfig: { temperature: 0.85, topK: 40, topP: 0.80 }
                 })
             });
 
@@ -117,19 +123,20 @@ CRITICAL HEURISTICS TO BYPASS AI DETECTION (FOLLOW STRICTLY):
 
         } catch (error) {
             console.warn("Primary Engine Failed. Switching to Groq Node...", error.message);
-            // ENGINE 2: GROQ LPU - GPT-OSS-120B (Failover)
+            // ENGINE 2: GROQ LPU (Failover)
             const groqUrl = "https://api.groq.com/openai/v1/chat/completions";
             const groqResponse = await fetch(groqUrl, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${GROQ_API_KEY}`, 'Content-Type': 'application/json' },
-                signal: fetchTimeout(6000).signal,
+                signal: fetchTimeout(4000).signal,
                 body: JSON.stringify({
-                    model: "openai/gpt-oss-120b",
+                    model: "openai/gpt-oss-120b", // Pastikan ID model Groq valid sesuai dokumentasi terbaru mereka
                     messages: [
                         { role: "system", content: systemPrompt },
                         { role: "user", content: `Original Text to Humanize:\n"""\n${processedInputText}\n"""` }
                     ],
-                    temperature: 0.95,
+                    temperature: 0.85,
+                    top_p: 0.80,
                     max_tokens: 3000
                 })
             });
@@ -139,8 +146,8 @@ CRITICAL HEURISTICS TO BYPASS AI DETECTION (FOLLOW STRICTLY):
             humanizedText = groqData.choices[0].message.content;
         }
 
-        // 4. POST-PROCESS SANITIZATION (The Whitespace Fix)
-        // Removes all double spaces, rogue newlines, and random indents to ensure a pristine UI render
+        // 4. MICRO-SANITIZER (Pembersihan Spasi Mutlak)
+        // Membunuh semua enter ganda, tab, dan spasi yang merusak UI
         humanizedText = humanizedText.replace(/\s+/g, ' ').trim();
 
         // 5. SECURE DELIVERY
