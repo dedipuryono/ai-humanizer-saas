@@ -3,416 +3,450 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="StealthCore AI - The ultimate cognitive AI text humanizer. Bypass Turnitin, GPTZero, and Originality with military-grade obfuscation.">
-    <title>StealthCore AI | Enterprise AI Content Humanizer</title>
+    <meta name="description" content="StealthCore AI - Enterprise cognitive AI text humanizer. Evade Turnitin, GPTZero, and Originality algorithms.">
+    <title>StealthCore AI | Enterprise Anti-Detection Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['Fira Code', 'monospace'] },
-                    colors: { cyber: { 900: '#0f172a', 800: '#1e293b', green: '#10b981', purple: '#8b5cf6' } }
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], // 90% of UI (Corporate Clean)
+                        mono: ['JetBrains Mono', 'monospace'] // 10% of UI (Technical Data)
+                    },
+                    colors: { 
+                        obsidian: {
+                            950: '#050505', // True Black background
+                            900: '#0a0a0a', // Panel backgrounds
+                            800: '#141414', // Elevated panels
+                            border: '#1f1f1f' // Micro-borders
+                        }
+                    },
+                    backgroundImage: {
+                        'grid-pattern': 'radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px)'
+                    }
                 }
             }
         }
     </script>
     <style>
-        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }
-        .cyber-glow { box-shadow: 0 0 20px rgba(16, 185, 129, 0.2); }
-        .cyber-glow:hover { box-shadow: 0 0 30px rgba(16, 185, 129, 0.4); }
-        .fade-bottom { -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%); mask-image: linear-gradient(to bottom, black 50%, transparent 100%); }
-        .cursor::after { content: '|'; animation: blink 1s step-end infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
-        /* Hide default details marker */
-        details > summary::-webkit-details-marker { display: none; }
+        /* Obsidian Stealth Architecture */
+        body { background-color: #050505; color: #ededed; }
+        .bg-grid { background-size: 24px 24px; }
+        
+        /* Tactile Panels with Apple-style Micro-borders */
+        .tactical-panel {
+            background-color: #0a0a0a;
+            border: 1px solid #1f1f1f;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 4px 20px rgba(0,0,0,0.5);
+            border-radius: 12px;
+        }
+        
+        /* Magnetic CTA Button */
+        .btn-magnetic {
+            background-color: #ffffff;
+            color: #000000;
+            border: 1px solid #ffffff;
+            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,1), 0 0 20px rgba(255,255,255,0.1);
+            transition: all 0.2s ease;
+        }
+        .btn-magnetic:hover {
+            background-color: #e5e5e5;
+            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,1), 0 0 30px rgba(255,255,255,0.2);
+            transform: translateY(-1px);
+        }
+        .btn-magnetic:disabled {
+            background-color: #333; color: #666; border-color: #333; box-shadow: none; transform: none; cursor: not-allowed;
+        }
+
+        /* Paywall Blackout Lock */
+        .lock-scroll { overflow: hidden; height: 100vh; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #1f1f1f; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #333; }
+
+        /* Terminal Blink */
+        .blink { animation: blinker 1s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
+
+        /* Text Blur for Paywall */
+        .text-blur { color: transparent; text-shadow: 0 0 8px rgba(255,255,255,0.5); user-select: none; }
     </style>
 </head>
-<body class="bg-cyber-900 text-slate-300 font-sans antialiased selection:bg-cyber-purple selection:text-white">
+<body class="antialiased bg-grid relative selection:bg-white selection:text-black">
+
+    <!-- Ambient Mesh Glow (Subtle) -->
+    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white opacity-[0.015] blur-[120px] pointer-events-none z-0"></div>
 
     <!-- NAVBAR -->
-    <nav class="fixed w-full z-50 glass-panel border-b-0 border-slate-800">
+    <nav class="fixed w-full z-40 bg-obsidian-950/80 backdrop-blur-md border-b border-obsidian-border">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <i class="fa-solid fa-user-ninja text-cyber-green text-2xl"></i>
-                    <span class="font-mono font-bold text-xl text-white tracking-tighter">STEALTH<span class="text-cyber-green">CORE</span></span>
+                    <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
+                        <i class="fa-solid fa-layer-group text-black text-xs"></i>
+                    </div>
+                    <span class="font-sans font-bold text-lg text-white tracking-tight">StealthCore</span>
                 </div>
                 <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#workspace" class="hover:text-cyber-green transition-colors font-semibold">Workspace</a>
-                        <a href="#creators" class="hover:text-cyber-green transition-colors font-semibold">Creators</a>
-                        <a href="#pricing" class="hover:text-cyber-purple transition-colors font-semibold">Pricing</a>
-                        <a href="#faq" class="hover:text-cyber-green transition-colors font-semibold">FAQ</a>
+                    <div class="ml-10 flex items-baseline space-x-8 text-sm text-neutral-400">
+                        <a href="#workspace" class="hover:text-white transition-colors">Engine</a>
+                        <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+                        <a href="#faq" class="hover:text-white transition-colors">Intel</a>
                     </div>
-                </div>
-                <div>
-                    <a href="#workspace" class="bg-cyber-green text-slate-950 px-5 py-2 rounded font-mono font-bold text-sm hover:bg-emerald-400 transition-colors shadow-lg">INITIATE</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- HERO & DUAL-PANE WORKSPACE -->
-    <section id="workspace" class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-screen">
-        <div class="text-center mb-12">
-            <h1 class="text-2xl md:text-4xl lg:text-5xl font-mono font-bold text-white mb-4 h-20 md:h-16 flex items-center justify-center">
-                <span id="typewriter" class="text-cyber-green cursor"></span>
+    <!-- WORKSPACE / EDITOR SECTION -->
+    <section id="workspace" class="pt-28 pb-12 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto min-h-screen relative z-10">
+        
+        <!-- Hero Copy -->
+        <div class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-sans font-bold text-white mb-4 tracking-tight">
+                Evade algorithmic detection.
             </h1>
-            <p class="text-slate-400 max-w-2xl mx-auto mt-4 text-lg">Disrupt detection algorithms. Bypass Turnitin, GPTZero, and Originality with military-grade cognitive paraphrasing.</p>
+            <p class="text-neutral-400 max-w-2xl mx-auto text-lg font-sans">
+                Military-grade cognitive paraphrasing. Render your AI-generated text completely invisible to Turnitin, GPTZero, and Google HCU.
+            </p>
         </div>
 
-        <!-- RADAR / STATUS BAR -->
-        <div class="flex justify-between items-center bg-slate-900 border border-slate-700 p-3 rounded-t-lg font-mono text-xs text-slate-400 shadow-inner">
-            <div class="flex items-center gap-3">
-                <span class="flex h-3 w-3 relative">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyber-green opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-3 w-3 bg-cyber-green"></span>
-                </span>
-                <span class="hidden sm:inline">Active Node: <span class="text-white">GPT-OSS-120B / Gemini-Flash</span></span>
-                <span class="sm:hidden">Node: <span class="text-white">Auto</span></span>
-            </div>
-            <div id="radar-status" class="text-cyber-green font-bold uppercase tracking-wider">READY TO BYPASS</div>
-        </div>
-
-        <!-- DUAL PANE EDITOR -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-1 mb-8 shadow-2xl">
-            <!-- Input Panel -->
-            <div class="glass-panel p-5 flex flex-col h-[400px] md:h-[500px]">
-                <div class="flex justify-between items-center mb-3 border-b border-slate-700 pb-2">
-                    <span class="font-mono text-sm font-semibold text-white">INPUT (AI-Generated Text)</span>
-                    <span id="wordCount" class="text-xs text-slate-500 font-mono">0 Words</span>
-                </div>
-                <textarea id="inputText" class="w-full flex-grow bg-transparent text-slate-300 resize-none outline-none focus:ring-0 placeholder-slate-600 font-sans text-base leading-relaxed" placeholder="Paste your ChatGPT, Claude, or Gemini generated text here..."></textarea>
-            </div>
-
-            <!-- Output Panel -->
-            <div class="glass-panel p-5 rounded-b-lg md:rounded-b-none md:rounded-br-lg flex flex-col h-[400px] md:h-[500px] relative overflow-hidden" id="outputContainer">
-                <div class="flex justify-between items-center mb-3 border-b border-slate-700 pb-2">
-                    <span class="font-mono text-sm font-semibold text-cyber-green"><i class="fa-solid fa-check-double mr-1"></i> OUTPUT (100% Human)</span>
-                    <button id="copyBtn" class="text-xs text-slate-400 hover:text-white hidden transition-colors font-mono"><i class="fa-regular fa-copy"></i> Copy</button>
+        <!-- THE ARSENAL (Dual Pane) -->
+        <div class="tactical-panel flex flex-col mb-8 overflow-hidden">
+            
+            <!-- System Header & Scarcity Meter -->
+            <div class="flex justify-between items-center bg-obsidian-800 border-b border-obsidian-border px-4 py-3">
+                <div class="flex items-center gap-3 font-mono text-[10px] md:text-xs text-neutral-500 uppercase tracking-widest">
+                    <span class="flex h-2 w-2 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-40"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                    </span>
+                    <span>Node: GPT-OSS-120B / LPU Edge</span>
                 </div>
                 
-                <div id="outputText" class="w-full flex-grow overflow-y-auto text-slate-300 font-sans text-base whitespace-pre-wrap leading-relaxed">
-                    Awaiting payload...
+                <!-- SCARCITY METER (Point 3) -->
+                <div id="quotaMeter" class="font-mono text-[10px] md:text-xs font-bold text-emerald-400 border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 rounded uppercase tracking-wider transition-colors duration-500">
+                    <i class="fa-solid fa-satellite-dish mr-1 blink"></i> FREE TIER: 1/1 BYPASS REMAINING
+                </div>
+            </div>
+
+            <!-- Editors -->
+            <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-obsidian-border">
+                
+                <!-- Input Panel -->
+                <div class="p-5 flex flex-col h-[450px]">
+                    <div class="flex justify-between items-end mb-4">
+                        <span class="font-sans text-sm font-semibold text-neutral-300">Input (Flagged AI)</span>
+                        <div class="flex items-center gap-3">
+                            <!-- ONE-CLICK EPIPHANY (Point 2) -->
+                            <button id="loadSampleBtn" class="font-mono text-[10px] text-neutral-500 hover:text-white underline transition-colors">Load Sample Payload</button>
+                            <span id="wordCount" class="text-[10px] text-neutral-600 font-mono">0 W</span>
+                        </div>
+                    </div>
+                    <textarea id="inputText" class="w-full flex-grow bg-transparent text-neutral-300 resize-none outline-none focus:ring-0 placeholder-neutral-700 font-sans text-base leading-relaxed" placeholder="Paste your detectable text here to initiate neutralization..."></textarea>
                 </div>
 
-                <!-- THE TRAPDOOR PAYWALL -->
-                <div id="paywallOverlay" class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/95 to-slate-900/40 hidden flex-col items-center justify-end pb-12 z-10 px-4">
-                    <div class="bg-cyber-900 border border-cyber-purple p-6 rounded-xl text-center shadow-[0_0_40px_rgba(139,92,246,0.3)] w-full max-w-sm mx-auto transform transition-all translate-y-4 animate-[slideUp_0.5s_ease-out_forwards]">
-                        <i class="fa-solid fa-lock text-cyber-purple text-4xl mb-4"></i>
-                        <h3 class="text-white font-bold text-xl mb-2">Free Limit Reached</h3>
-                        <p class="text-sm text-slate-400 mb-6">Your text has been successfully humanized, but the remainder is hidden. Unlock now to copy the full result.</p>
-                        <a href="#pricing" class="block w-full bg-cyber-purple text-white py-3 rounded-lg font-bold hover:bg-violet-500 transition-colors shadow-lg">UNLOCK FULL TEXT</a>
+                <!-- Output Panel -->
+                <div class="p-5 flex flex-col h-[450px] relative bg-obsidian-950/50" id="outputContainer">
+                    <div class="flex justify-between items-end mb-4">
+                        <span class="font-sans text-sm font-semibold text-white flex items-center">
+                            <i class="fa-solid fa-fingerprint text-neutral-500 mr-2"></i> Output (100% Human)
+                        </span>
+                        <button id="copyBtn" class="text-[10px] font-mono text-neutral-500 hover:text-white hidden transition-colors uppercase tracking-widest"><i class="fa-regular fa-copy mr-1"></i> Copy</button>
+                    </div>
+                    
+                    <!-- Result Text -->
+                    <div id="outputText" class="w-full flex-grow overflow-y-auto text-neutral-400 font-sans text-base whitespace-pre-wrap leading-relaxed">
+                        Awaiting execution command...
+                    </div>
+
+                    <!-- EXECUTION THEATER (Point 1 - Terminal Animation) -->
+                    <div id="executionTheater" class="absolute inset-0 bg-obsidian-950 z-10 hidden flex-col p-6 font-mono text-xs md:text-sm text-neutral-400 overflow-hidden">
+                        <div id="termLine1" class="hidden text-neutral-500">> Initializing LPU Edge connection... <span class="text-white">OK</span></div>
+                        <div id="termLine2" class="hidden mt-2">> Scanning for Markov chain footprints... <span class="text-white">DETECTED</span></div>
+                        <div id="termLine3" class="hidden mt-2">> Dismantling predictive text vectors...</div>
+                        <div id="termLine4" class="hidden mt-2">> Injecting cognitive burstiness & perplexity... <span class="text-emerald-400 blink">PROCESSING</span></div>
+                        <div id="termLine5" class="hidden mt-2 text-white">> Neutralization complete. Bypassing detectors...</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="text-center">
-            <button id="humanizeBtn" class="bg-cyber-green text-slate-950 px-8 md:px-12 py-4 rounded-lg font-mono font-bold text-lg hover:bg-emerald-400 transition-all cyber-glow w-full md:w-auto shadow-xl">
-                <i class="fa-solid fa-bolt mr-2"></i>HUMANIZE TEXT NOW
+        <!-- Magnetic CTA & Micro-Trust Bar (Point 5) -->
+        <div class="text-center max-w-md mx-auto">
+            <button id="humanizeBtn" class="btn-magnetic w-full py-4 rounded-lg font-sans font-bold text-lg uppercase tracking-wide">
+                Humanize Text
             </button>
+            
+            <div class="flex flex-wrap justify-center gap-4 text-[10px] text-neutral-600 font-mono uppercase tracking-widest mt-4">
+                <span class="flex items-center"><i class="fa-solid fa-shield-halved mr-1"></i> Zero-Log Policy</span>
+                <span class="flex items-center"><i class="fa-solid fa-server mr-1"></i> Groq LPU Powered</span>
+            </div>
         </div>
     </section>
 
-    <!-- BUILT FOR EVERY CREATOR -->
-    <section id="creators" class="py-24 bg-slate-900 border-t border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Engineered For Every <span class="text-cyber-green">Creator</span></h2>
-                <p class="text-slate-400 text-lg">A cognitive architecture that adapts to any writing style and intent.</p>
+    <!-- BLACKOUT PAYWALL (Point 4 - Initially Hidden, rendered at body level) -->
+    <div id="blackoutPaywall" class="fixed inset-0 bg-obsidian-950/95 backdrop-blur-sm z-[100] hidden flex-col items-center justify-center p-4">
+        <div class="tactical-panel p-8 md:p-12 max-w-lg w-full text-center relative overflow-hidden animate-[slideUp_0.4s_ease-out_forwards]">
+            <!-- Top highlight bar -->
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white to-transparent opacity-20"></div>
+            
+            <div class="w-16 h-16 mx-auto bg-obsidian-800 border border-obsidian-border rounded-full flex items-center justify-center mb-6">
+                <i class="fa-solid fa-lock text-white text-2xl"></i>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Card 1 -->
-                <div class="glass-panel p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 hover:border-cyber-green/50 hover:shadow-[0_10px_30px_rgba(16,185,129,0.1)] group">
-                    <div class="bg-slate-800/50 w-14 h-14 rounded-lg flex items-center justify-center mb-6 border border-slate-700 group-hover:border-cyber-green/50 transition-colors">
-                        <i class="fa-solid fa-graduation-cap text-cyber-green text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-bold text-lg mb-3">Students & Educators</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Bypass Turnitin for essays, research papers, and reports without compromising academic facts or citation integrity.</p>
+            <h2 class="text-2xl font-sans font-bold text-white mb-2 tracking-tight">Security Clearance Required</h2>
+            <p class="text-neutral-400 text-sm mb-8">Your free trial IP quota has been exhausted. The remainder of your humanized text is encrypted.</p>
+            
+            <!-- Decoy Pricing (Anchoring) -->
+            <div class="bg-obsidian-950 border border-obsidian-border rounded-lg p-6 mb-8 text-left">
+                <div class="flex justify-between items-center mb-2 border-b border-obsidian-border/50 pb-2">
+                    <span class="text-neutral-500 font-mono text-xs uppercase">Retail Price</span>
+                    <span class="text-neutral-600 line-through font-mono text-sm">$14.99/mo</span>
                 </div>
-                <!-- Card 2 -->
-                <div class="glass-panel p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 hover:border-cyber-purple/50 hover:shadow-[0_10px_30px_rgba(139,92,246,0.1)] group">
-                    <div class="bg-slate-800/50 w-14 h-14 rounded-lg flex items-center justify-center mb-6 border border-slate-700 group-hover:border-cyber-purple/50 transition-colors">
-                        <i class="fa-solid fa-pen-nib text-cyber-purple text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-bold text-lg mb-3">SEO Content Writers</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Scale mass article production. Evade Google's Helpful Content Update (HCU) penalties with natural syntax bursts.</p>
+                <div class="flex justify-between items-center pt-2">
+                    <span class="text-white font-sans font-bold">Your IP Offer (Pro)</span>
+                    <span class="text-2xl font-sans font-bold text-white">$4.99<span class="text-sm text-neutral-500 font-normal">/mo</span></span>
                 </div>
-                <!-- Card 3 -->
-                <div class="glass-panel p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 hover:border-blue-500/50 hover:shadow-[0_10px_30px_rgba(59,130,246,0.1)] group">
-                    <div class="bg-slate-800/50 w-14 h-14 rounded-lg flex items-center justify-center mb-6 border border-slate-700 group-hover:border-blue-500/50 transition-colors">
-                        <i class="fa-solid fa-briefcase text-blue-500 text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-bold text-lg mb-3">Business Owners</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Craft marketing copy, client emails, and proposals that sound authentically human, not like a corporate robot.</p>
-                </div>
-                <!-- Card 4 -->
-                <div class="glass-panel p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 hover:border-orange-500/50 hover:shadow-[0_10px_30px_rgba(249,115,22,0.1)] group">
-                    <div class="bg-slate-800/50 w-14 h-14 rounded-lg flex items-center justify-center mb-6 border border-slate-700 group-hover:border-orange-500/50 transition-colors">
-                        <i class="fa-solid fa-code text-orange-500 text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-bold text-lg mb-3">Developers & Hackers</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Integrate directly into your automation pipelines via our dedicated API. Millisecond execution on LPU Edge nodes.</p>
-                </div>
+                <ul class="mt-4 space-y-2 text-xs text-neutral-400 font-sans">
+                    <li class="flex items-center"><i class="fa-solid fa-check text-white mr-2"></i> 50,000 words limit</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-white mr-2"></i> 100% Turnitin Bypass</li>
+                </ul>
             </div>
-        </div>
-    </section>
 
-    <!-- PRICING / PANIC PASS -->
-    <section id="pricing" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Checkout Action -->
+            <a href="#" class="btn-magnetic block w-full py-4 rounded-lg font-sans font-bold text-sm uppercase tracking-wide">
+                Unlock Full Access
+            </a>
+            <p class="text-[10px] text-neutral-600 mt-4 font-mono uppercase tracking-widest">Secure Checkout via LemonSqueezy</p>
+        </div>
+    </div>
+
+    <!-- PRICING SECTION -->
+    <section id="pricing" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-obsidian-border">
         <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Security <span class="text-cyber-purple">Investment</span></h2>
-            <p class="text-slate-400 text-lg">Pay a fraction of the cost of a failed grade or an SEO penalty.</p>
+            <h2 class="text-3xl font-sans font-bold text-white mb-3 tracking-tight">Tactical Deployment</h2>
+            <p class="text-neutral-400 text-base">Select your security clearance level.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <!-- Student Pass -->
-            <div class="glass-panel p-8 md:p-10 rounded-2xl relative overflow-hidden border border-slate-700 flex flex-col">
-                <div class="absolute top-0 right-0 bg-slate-700 text-white text-[10px] uppercase tracking-wider font-bold px-4 py-1.5 rounded-bl-lg">ONE-TIME PAYMENT</div>
-                <h3 class="text-2xl font-bold text-white mb-2">Student Panic Pass</h3>
-                <p class="text-slate-400 text-sm mb-6 h-10">Assignment due tomorrow? Pass the detectors tonight.</p>
-                <div class="mb-8"><span class="text-6xl font-black text-white">$2.99</span><span class="text-slate-500 font-mono"> / 3 Days</span></div>
-                <ul class="space-y-4 mb-10 text-sm text-slate-300 flex-grow">
-                    <li class="flex items-start"><i class="fa-solid fa-check text-cyber-green mt-1 mr-3"></i> 20,000 words limit</li>
-                    <li class="flex items-start"><i class="fa-solid fa-check text-cyber-green mt-1 mr-3"></i> 100% Turnitin Bypass Guarantee</li>
-                    <li class="flex items-start"><i class="fa-solid fa-check text-cyber-green mt-1 mr-3"></i> Priority Node Execution</li>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <!-- Panic Pass -->
+            <div class="tactical-panel p-8 flex flex-col">
+                <div class="text-[10px] text-neutral-500 font-mono uppercase tracking-widest mb-4">One-Time Payment</div>
+                <h3 class="text-xl font-sans font-bold text-white mb-2">Student Panic Pass</h3>
+                <p class="text-neutral-400 text-sm mb-8 h-10">Pass the detectors tonight. No recurring subscription.</p>
+                <div class="mb-8"><span class="text-4xl font-sans font-bold text-white">$2.99</span><span class="text-neutral-500 font-mono text-sm"> / 3 Days</span></div>
+                <a href="#" class="w-full text-center border border-obsidian-border hover:bg-white hover:text-black py-3 rounded text-sm font-bold transition-colors mb-8 uppercase tracking-wide">Get 3-Day Access</a>
+                <ul class="space-y-3 text-sm text-neutral-400 flex-grow">
+                    <li class="flex items-center"><i class="fa-solid fa-check text-white mr-3 text-xs"></i> 20,000 words limit</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-white mr-3 text-xs"></i> Guaranteed Bypass</li>
                 </ul>
-                <!-- Placeholder Link for Checkout -->
-                <a href="#" class="block w-full text-center border-2 border-cyber-green text-cyber-green hover:bg-cyber-green hover:text-slate-950 py-4 rounded-lg font-bold transition-colors">GET 3-DAY ACCESS</a>
             </div>
 
-            <!-- Pro Monthly -->
-            <div class="bg-cyber-900 border-2 border-cyber-purple p-8 md:p-10 rounded-2xl relative shadow-[0_0_40px_rgba(139,92,246,0.15)] transform md:-translate-y-4 flex flex-col">
-                <div class="absolute top-0 right-0 bg-cyber-purple text-white text-[10px] uppercase tracking-wider font-bold px-4 py-1.5 rounded-bl-lg">MOST POPULAR</div>
-                <h3 class="text-2xl font-bold text-white mb-2">Stealth Pro</h3>
-                <p class="text-slate-400 text-sm mb-6 h-10">For heavy content creators, bloggers, and SEO agencies.</p>
-                <div class="mb-8"><span class="text-6xl font-black text-white">$4.99</span><span class="text-slate-500 font-mono"> / Month</span></div>
-                <ul class="space-y-4 mb-10 text-sm text-slate-300 flex-grow">
-                    <li class="flex items-start"><i class="fa-solid fa-check text-cyber-purple mt-1 mr-3"></i> 50,000 words limit / month</li>
-                    <li class="flex items-start"><i class="fa-solid fa-check text-cyber-purple mt-1 mr-3"></i> Zero-Trust Data Deletion</li>
-                    <li class="flex items-start"><i class="fa-solid fa-check text-cyber-purple mt-1 mr-3"></i> Backend API Access included</li>
-                    <li class="flex items-start"><i class="fa-solid fa-check text-cyber-purple mt-1 mr-3"></i> Ad-free & Watermark-free</li>
+            <!-- Pro -->
+            <div class="tactical-panel p-8 flex flex-col relative">
+                <!-- Highlight border top -->
+                <div class="absolute top-0 left-0 w-full h-[1px] bg-white opacity-20"></div>
+                
+                <div class="flex justify-between items-center mb-4">
+                    <div class="text-[10px] text-white font-mono uppercase tracking-widest">Subscription</div>
+                    <div class="text-[9px] bg-white text-black px-2 py-1 rounded font-bold uppercase tracking-widest">Recommended</div>
+                </div>
+                <h3 class="text-xl font-sans font-bold text-white mb-2">Stealth Pro</h3>
+                <p class="text-neutral-400 text-sm mb-8 h-10">For heavy content creators, agencies, and developers.</p>
+                <div class="mb-8"><span class="text-4xl font-sans font-bold text-white">$4.99</span><span class="text-neutral-500 font-mono text-sm"> / Month</span></div>
+                <a href="#" class="btn-magnetic w-full text-center py-3 rounded text-sm font-bold mb-8 uppercase tracking-wide">Subscribe to Pro</a>
+                <ul class="space-y-3 text-sm text-neutral-400 flex-grow">
+                    <li class="flex items-center"><i class="fa-solid fa-check text-white mr-3 text-xs"></i> 50,000 words / month</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-white mr-3 text-xs"></i> Zero-Trust Data Wipe</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-white mr-3 text-xs"></i> API Access Included</li>
                 </ul>
-                <!-- LEMONSQUEEZY CHECKOUT LINK GOES HERE LATER -->
-                <a href="#" class="block w-full text-center bg-cyber-purple text-white hover:bg-violet-500 py-4 rounded-lg font-bold transition-colors shadow-lg">SUBSCRIBE TO PRO</a>
             </div>
         </div>
     </section>
 
-    <!-- INTEL BRIEFING (FAQ) -->
-    <section id="faq" class="py-20 bg-slate-900/50 border-t border-slate-800">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-white mb-4">Intel <span class="text-cyber-green">Briefing</span></h2>
-                <p class="text-slate-400">Frequently asked questions regarding our stealth protocols.</p>
-            </div>
-            
-            <div class="space-y-4">
-                <details class="group glass-panel rounded-lg overflow-hidden">
-                    <summary class="font-bold cursor-pointer p-5 text-white flex justify-between items-center list-none hover:bg-slate-800/50 transition-colors">
-                        Is this really undetectable by Turnitin and GPTZero?
-                        <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-cyber-green"></i></span>
-                    </summary>
-                    <div class="text-slate-400 p-5 border-t border-slate-700/50 text-sm leading-relaxed bg-slate-800/20">
-                        Yes. While standard tools use basic synonym replacement (which detectors easily spot), our Cognitive Disruption Engine dismantles the predictive Markov chains and perplexity metrics that Turnitin, GPTZero, and Originality.ai rely on.
-                    </div>
-                </details>
-                <details class="group glass-panel rounded-lg overflow-hidden">
-                    <summary class="font-bold cursor-pointer p-5 text-white flex justify-between items-center list-none hover:bg-slate-800/50 transition-colors">
-                        Will it change the facts or meaning of my text?
-                        <summary style="display:none"></summary> <!-- Fallback for older Safari -->
-                        <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-cyber-green"></i></span>
-                    </summary>
-                    <div class="text-slate-400 p-5 border-t border-slate-700/50 text-sm leading-relaxed bg-slate-800/20">
-                        Absolutely not. Our dual-core LPU infrastructure is explicitly instructed to preserve all facts, numbers, quotes, and core semantics. It only manipulates the syntactic rhythm (burstiness) and vocabulary structure to mimic human imperfection.
-                    </div>
-                </details>
-                <details class="group glass-panel rounded-lg overflow-hidden">
-                    <summary class="font-bold cursor-pointer p-5 text-white flex justify-between items-center list-none hover:bg-slate-800/50 transition-colors">
-                        Are my submitted texts saved in your database?
-                        <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-cyber-green"></i></span>
-                    </summary>
-                    <div class="text-slate-400 p-5 border-t border-slate-700/50 text-sm leading-relaxed bg-slate-800/20">
-                        No. We operate on a strict Zero-Trust Data Policy. Your inputs and outputs are processed in volatile RAM at the Edge and are immediately wiped the moment the HTTP request completes. We do not store, log, or sell your data.
-                    </div>
-                </details>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTACT (SECURE COMMS) -->
-    <section id="contact" class="py-24 bg-slate-900 border-t border-slate-800">
-        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-10">
-                <h2 class="text-2xl font-bold text-white mb-2">Secure Comms Channel</h2>
-                <p class="text-slate-400">Need a custom Enterprise limit? Transmit your payload.</p>
-            </div>
-            <form class="glass-panel p-8 rounded-2xl">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <label class="block text-xs font-mono font-bold text-slate-400 mb-2 tracking-widest">IDENTITY ID</label>
-                        <input type="text" class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyber-green transition-colors" placeholder="Name or Alias">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-mono font-bold text-slate-400 mb-2 tracking-widest">RETURN NODE</label>
-                        <input type="email" class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyber-green transition-colors" placeholder="Email Address">
-                    </div>
-                </div>
-                <div class="mb-8">
-                    <label class="block text-xs font-mono font-bold text-slate-400 mb-2 tracking-widest">PAYLOAD</label>
-                    <textarea rows="4" class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyber-green resize-none transition-colors" placeholder="Enter your message..."></textarea>
-                </div>
-                <button type="button" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-mono font-bold py-4 rounded-lg transition-colors tracking-widest">
-                    TRANSMIT MESSAGE
-                </button>
-            </form>
-        </div>
-    </section>
-
-    <!-- LEGAL & FOOTER -->
-    <footer class="bg-cyber-950 pt-20 pb-8 border-t border-slate-800">
+    <!-- FOOTER & LEGAL -->
+    <footer class="border-t border-obsidian-border bg-obsidian-950 pt-16 pb-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-16">
-                <div class="col-span-1 md:col-span-2">
-                    <span class="font-mono font-bold text-2xl text-white tracking-tighter mb-4 block">STEALTH<span class="text-cyber-green">CORE</span></span>
-                    <p class="text-slate-500 text-sm mb-6 max-w-md leading-relaxed">We believe AI is an extension of human intelligence, not a replacement. This tool is engineered to defend your writing authenticity from flawed algorithmic detectors.</p>
-                    <div class="flex space-x-5">
-                        <a href="#" class="text-slate-500 hover:text-white transition-colors"><i class="fa-brands fa-github text-xl"></i></a>
-                        <a href="#" class="text-slate-500 hover:text-white transition-colors"><i class="fa-brands fa-x-twitter text-xl"></i></a>
+            <div class="flex flex-col md:flex-row justify-between items-start mb-12 gap-8">
+                <div class="max-w-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-5 h-5 bg-white rounded flex items-center justify-center">
+                            <i class="fa-solid fa-layer-group text-black text-[10px]"></i>
+                        </div>
+                        <span class="font-sans font-bold text-white tracking-tight">StealthCore Inc.</span>
+                    </div>
+                    <p class="text-neutral-500 text-xs leading-relaxed">
+                        Engineered to protect human authenticity from flawed algorithmic evaluation. Use responsibly.
+                    </p>
+                </div>
+                <div class="flex gap-12">
+                    <div>
+                        <h4 class="text-white font-sans font-semibold text-sm mb-4">Vault</h4>
+                        <ul class="space-y-2 text-xs text-neutral-500">
+                            <li><a href="/privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                            <li><a href="/terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+                            <li><a href="mailto:admin@stealthcore.com" class="hover:text-white transition-colors">Contact Node</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-sans font-semibold text-sm mb-4">System</h4>
+                        <ul class="space-y-2 text-xs font-mono text-neutral-500">
+                            <li><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block mr-2"></span>LPU: Online</li>
+                            <li><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block mr-2"></span>D1: Synced</li>
+                        </ul>
                     </div>
                 </div>
-                <div>
-                    <h4 class="text-white font-bold mb-5 tracking-wide">Legal Vault</h4>
-                    <ul class="space-y-3 text-sm text-slate-500">
-                        <li><a href="/privacy.html" class="hover:text-cyber-green transition-colors">Privacy Policy (Zero-Log)</a></li>
-                        <li><a href="/terms.html" class="hover:text-cyber-green transition-colors">Terms of Service</a></li>
-                        <li><a href="/refund.html" class="hover:text-cyber-green transition-colors">Refund Policy</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-5 tracking-wide">Live System Status</h4>
-                    <ul class="space-y-4 text-sm font-mono bg-slate-900/50 p-4 rounded-lg border border-slate-800">
-                        <li class="flex items-center text-slate-400"><i class="fa-solid fa-circle text-[8px] text-cyber-green mr-3 animate-pulse"></i> Groq LPU: ONLINE</li>
-                        <li class="flex items-center text-slate-400"><i class="fa-solid fa-circle text-[8px] text-cyber-green mr-3"></i> Gemini Flash: STANDBY</li>
-                        <li class="flex items-center text-slate-400"><i class="fa-solid fa-circle text-[8px] text-cyber-green mr-3"></i> D1 Database: SYNCED</li>
-                    </ul>
-                </div>
             </div>
-            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-slate-600 text-sm">© 2026 StealthCore AI Inc. All rights reserved.</p>
-                <p class="text-slate-600 text-xs mt-3 md:mt-0 font-mono tracking-widest uppercase">Encrypted & Secured by Cloudflare</p>
+            <div class="border-t border-obsidian-border pt-8 flex flex-col md:flex-row justify-between items-center text-[10px] text-neutral-600 font-mono uppercase tracking-widest">
+                <p>© 2026 StealthCore AI. All rights reserved.</p>
+                <p class="mt-2 md:mt-0">Encrypted by Cloudflare</p>
             </div>
         </div>
     </footer>
 
     <style>
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- THE MASTER JAVASCRIPT LOGIC -->
     <script>
-        // 1. Ghost Typing Effect
-        const textToType = "> Executing neural bypass sequence... Standby. Welcome to the invisible web.";
-        let i = 0;
-        function typeWriter() {
-            const el = document.getElementById("typewriter");
-            if (el && i < textToType.length) {
-                el.innerHTML += textToType.charAt(i);
-                i++;
-                setTimeout(typeWriter, 40);
-            }
-        }
-        window.onload = typeWriter;
-
-        // 2. Word Counter
+        // DOM Elements
         const inputText = document.getElementById('inputText');
         const wordCount = document.getElementById('wordCount');
-        inputText.addEventListener('input', () => {
-            const words = inputText.value.trim().split(/\s+/).filter(word => word.length > 0).length;
-            wordCount.textContent = `${words} Words`;
+        const loadSampleBtn = document.getElementById('loadSampleBtn');
+        const humanizeBtn = document.getElementById('humanizeBtn');
+        
+        const outputText = document.getElementById('outputText');
+        const executionTheater = document.getElementById('executionTheater');
+        const copyBtn = document.getElementById('copyBtn');
+        
+        const quotaMeter = document.getElementById('quotaMeter');
+        const blackoutPaywall = document.getElementById('blackoutPaywall');
+
+        // Theater Lines
+        const tl1 = document.getElementById('termLine1');
+        const tl2 = document.getElementById('termLine2');
+        const tl3 = document.getElementById('termLine3');
+        const tl4 = document.getElementById('termLine4');
+        const tl5 = document.getElementById('termLine5');
+
+        // Sample Payload (Point 2 - One-Click Epiphany)
+        const samplePayload = "In today's fast-paced digital era, it is important to note that artificial intelligence has fundamentally transformed the landscape of technological innovation. Consequently, delving into the intricacies of machine learning reveals a tapestry of interconnected neural networks. In conclusion, as we navigate this comprehensive paradigm shift, society must embrace these advancements to foster sustainable growth.";
+        
+        loadSampleBtn.addEventListener('click', () => {
+            inputText.value = samplePayload;
+            updateWordCount();
         });
 
-        // 3. API Logic & The Trapdoor
-        const humanizeBtn = document.getElementById('humanizeBtn');
-        const outputText = document.getElementById('outputText');
-        const paywallOverlay = document.getElementById('paywallOverlay');
-        const radarStatus = document.getElementById('radar-status');
-        const copyBtn = document.getElementById('copyBtn');
+        // Word Counter
+        function updateWordCount() {
+            const words = inputText.value.trim().split(/\s+/).filter(word => word.length > 0).length;
+            wordCount.textContent = `${words} W`;
+        }
+        inputText.addEventListener('input', updateWordCount);
 
+        // Async Sleep Helper for Theater
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+        // Main Execution Logic
         humanizeBtn.addEventListener('click', async () => {
             const text = inputText.value.trim();
-            if (!text) {
-                alert("Please paste some text first.");
-                return;
-            }
+            if (!text) return;
 
-            // Processing Animation
-            humanizeBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i>PROCESSING...`;
+            // UI Reset & Lock
             humanizeBtn.disabled = true;
-            radarStatus.className = "text-yellow-400 font-bold animate-pulse uppercase tracking-wider";
-            radarStatus.innerHTML = "<i class='fa-solid fa-radar mr-2'></i>EVADING DETECTORS...";
-            outputText.innerHTML = "";
-            paywallOverlay.classList.add('hidden');
-            paywallOverlay.classList.remove('flex');
-            outputText.classList.remove('fade-bottom');
+            humanizeBtn.innerHTML = "EXECUTING...";
             copyBtn.classList.add('hidden');
+            outputText.innerHTML = "";
+            
+            // Activate Execution Theater (Point 1)
+            if(window.innerWidth < 768) {
+                // Auto-scroll on mobile for better UX
+                document.getElementById('outputContainer').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            
+            executionTheater.classList.remove('hidden');
+            executionTheater.classList.add('flex');
+            
+            // Reset Theater lines
+            [tl1, tl2, tl3, tl4, tl5].forEach(el => el.classList.add('hidden'));
+
+            // Run Theater & API Fetch concurrently
+            const theaterPromise = async () => {
+                await sleep(400); tl1.classList.remove('hidden');
+                await sleep(600); tl2.classList.remove('hidden');
+                await sleep(700); tl3.classList.remove('hidden');
+                await sleep(800); tl4.classList.remove('hidden');
+                await sleep(1500); // Fake heavy computing time
+                tl5.classList.remove('hidden');
+                await sleep(500);
+            };
+
+            const apiPromise = fetch('/api/humanize', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: text })
+            }).then(res => {
+                if(!res.ok) throw new Error('API Reject');
+                return res.json();
+            });
 
             try {
-                // Execute API Call to Cloudflare Worker
-                const response = await fetch('/api/humanize', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text: text })
-                });
+                // Wait for both Theater to finish and API to return
+                const [, data] = await Promise.all([theaterPromise(), apiPromise]);
 
-                if (!response.ok) throw new Error('API Error');
-                const data = await response.json(); 
+                // Hide Theater
+                executionTheater.classList.remove('flex');
+                executionTheater.classList.add('hidden');
 
-                // Trapdoor Paywall Logic
+                // Update Scarcity Meter (Point 3)
+                quotaMeter.innerHTML = "<i class='fa-solid fa-triangle-exclamation mr-1'></i> QUOTA EXHAUSTED (UPGRADE REQ)";
+                quotaMeter.classList.remove('text-emerald-400', 'border-emerald-400/20', 'bg-emerald-400/10');
+                quotaMeter.classList.add('text-red-500', 'border-red-500/20', 'bg-red-500/10');
+
+                // Trapdoor Paywall Logic (Point 4)
                 if (data.isLocked) {
-                    // Generate obfuscated text to prevent DOM scraping
-                    const fakeLockedText = Array(data.lockedWordCount).fill("██████").join(" ");
+                    const fakeLockedText = Array(data.lockedWordCount).fill("█████").join(" ");
                     outputText.innerHTML = `
-                        <span class="text-slate-200">${data.text}</span>
-                        <span class="text-slate-800 blur-[6px] select-none ml-1">${fakeLockedText}</span>
+                        <span class="text-neutral-300">${data.text}</span>
+                        <span class="text-blur ml-1">${fakeLockedText}</span>
                     `;
-                    outputText.classList.add('fade-bottom');
                     
+                    // Activate Blackout Scroll-Lock
                     setTimeout(() => {
-                        paywallOverlay.classList.remove('hidden');
-                        paywallOverlay.classList.add('flex');
-                    }, 1200); // Dramatic pause before paywall deployment
+                        document.body.classList.add('lock-scroll');
+                        blackoutPaywall.classList.remove('hidden');
+                        blackoutPaywall.classList.add('flex');
+                    }, 800); // Brief pause to let them see it worked before locking
+
                 } else {
                     outputText.textContent = data.text;
-                    copyBtn.classList.remove('hidden'); 
+                    copyBtn.classList.remove('hidden');
                 }
-
-                radarStatus.className = "text-cyber-green font-bold uppercase tracking-wider";
-                radarStatus.innerHTML = "<i class='fa-solid fa-shield-check mr-2'></i>100% HUMAN / 0% AI";
 
             } catch (error) {
                 console.error(error);
-                radarStatus.className = "text-red-500 font-bold uppercase tracking-wider";
-                radarStatus.innerHTML = "<i class='fa-solid fa-triangle-exclamation mr-2'></i>CONNECTION FAILED";
-                outputText.textContent = "System overloaded. Please try again in a moment.";
+                executionTheater.classList.remove('flex');
+                executionTheater.classList.add('hidden');
+                outputText.innerHTML = "<span class='text-red-500'>Connection to Edge Node failed. Please retry.</span>";
             } finally {
-                humanizeBtn.innerHTML = `<i class="fa-solid fa-bolt mr-2"></i>HUMANIZE TEXT NOW`;
                 humanizeBtn.disabled = false;
+                humanizeBtn.innerHTML = "HUMANIZE TEXT";
             }
         });
 
-        // 4. Copy to Clipboard
+        // Copy Feature
         copyBtn.addEventListener('click', () => {
             navigator.clipboard.writeText(outputText.textContent);
-            copyBtn.innerHTML = `<i class="fa-solid fa-check text-cyber-green"></i> Copied`;
-            setTimeout(() => { copyBtn.innerHTML = `<i class="fa-regular fa-copy"></i> Copy`; }, 2000);
+            copyBtn.innerHTML = `<i class="fa-solid fa-check text-white"></i>`;
+            setTimeout(() => { copyBtn.innerHTML = `<i class="fa-regular fa-copy mr-1"></i> Copy`; }, 2000);
         });
     </script>
 </body>
