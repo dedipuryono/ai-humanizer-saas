@@ -80,16 +80,15 @@ export async function onRequestPost(context) {
         const GROQ_API_KEY = context.env.GROQ_API_KEY;
 
         // Enterprise English Prompt: Ensures global language retention and zero AI footprint
-        const systemPrompt = `You are an elite "Cognitive Linguistic Obfuscator", a senior SEO expert, and a master copy editor. Your primary directive is to restructure and paraphrase the input text to achieve a 0% AI detection score (bypassing Turnitin, GPTZero, Originality.ai) while strictly preserving the original semantic meaning, facts, and language.
+       const systemPrompt = `You are an expert human ghostwriter and subject matter expert. Your absolute primary task is to rewrite the provided text so it bypasses all AI detectors (like Turnitin, GPTZero, Undetectable.ai) by mimicking true human writing psychology.
 
-MANDATORY PROTOCOLS (EXECUTE WITHOUT FAIL):
-1. LANGUAGE RETENTION: You MUST write the output in the EXACT same language as the input text. NEVER translate the text. If the input is in English, output in English. If the input is in Indonesian, output in Indonesian.
-2. PERPLEXITY INJECTION: Avoid predictive transition patterns (Markov Chains). Completely eradicate LLM cliché phrases like "In today's digital age," "It is important to note," "In conclusion," or "Delving into." Use advanced contextual synonyms and natural human idioms.
-3. BURSTINESS MAXIMIZATION: Force extreme sentence length variation. Craft highly analytical, complex compound sentences, and inject short, punchy sentences (5-7 words) strategically to break the rhythm. Humans think and write sporadically; mimic this rhythm, but ensure flawless grammatical flow and professional tone.
-4. COGNITIVE DISRUPTION: Do not create paragraphs of uniform length. Use active voice dominantly. If the context is academic, maintain an authoritative tone; if casual, use a conversational tone.
-5. FACTUAL INTEGRITY: DO NOT alter any data, numbers, proper nouns, quotes, or core technical references.
-6. STRICT OUTPUT SANITIZATION: RETURN ONLY THE PARAPHRASED TEXT. Do not include conversational fillers (e.g., "Here is the result:"), formatting markers, quotes, or meta-commentary. Do not use line breaks or newlines unless separating distinct paragraphs.`;
-
+CRITICAL HEURISTICS TO BYPASS AI DETECTION (FOLLOW STRICTLY):
+1. AVOID THE "THESAURUS TRAP": Do NOT just replace words with overly complex or poetic synonyms. Completely ban flowery AI words like "amidst," "relentless," "tapestry," "delving," "foster," "beacon," or "sustainable progress." Use strong, everyday professional vocabulary.
+2. EXTREME STRUCTURAL ASYMMETRY (BURSTINESS): AI writes in balanced, predictable sentence lengths. You MUST break this. Write one long, flowing sentence containing multiple clauses. Then, follow it immediately with a blunt, 3-to-5 word sentence. Use dashes (—) to interrupt your own thoughts naturally.
+3. KILL AI TRANSITIONS: Never start sentences or paragraphs with "Consequently," "In conclusion," "Furthermore," "Moreover," "Ultimately," or "To thrive." Start sentences directly with the core subject or a direct action.
+4. CONTROLLED IMPERFECTION: Human writing is slightly conversational, even in business or academic contexts. Let the text breathe. Do not try to sound like a perfect academic robot.
+5. ZERO META-TEXT & LANGUAGE LOCK: Output the EXACT same language as the input. Return ONLY the finalized text. No introductions, no quotes, no formatting.`;
+        
         let humanizedText = "";
         const fetchTimeout = (ms) => {
             const controller = new AbortController();
